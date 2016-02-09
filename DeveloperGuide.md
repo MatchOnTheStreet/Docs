@@ -47,7 +47,7 @@ The application is mainly developed using [Android Studio](https://developer.and
 The application is built using the integrated build system [Gradle](http://developer.android.com/sdk/installing/studio-build.html) of Android Studio. 
 Normally, Gradle will automatically build the project after it is opened in Android Studio. To manually do this, click on the “Build” option in the menu bar, and then choose “Rebuild project”.
 
-
+![menubar](img\1-menubar.png)
 
 Other options, such as making the project and generating the APK package, could also be accessed under this menu.
 
