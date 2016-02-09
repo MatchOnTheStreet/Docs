@@ -2,20 +2,20 @@
 
 ##Table of Contents
 1. Obtaining the Source Code
-	* Link to the repository
-	* Project files layout
-2. Building the project
-3. Testing/debugging
-4. Setting up automatic tests
-5. Releasing a new version
-6. List of known bugs and bug-tracking
+2. Directory Structure
+3. Opening the Project in an IDE
+4. Building the Project
+5. Testing Location Services
+6. Nightly Builds
+7. Releasing a New Version
+8. Bug reports
 
 ##Obtaining the Source Code
 To get the source code for Match on the Street, visit [this link to our github page](http://matchonthestreet.github.io/MatchOnTheStreet/). For direct access to our repository, visit [this link](https://github.com/MatchOnTheStreet/MatchOnTheStreet). 
 
 For more information on how to use Github, visit [this link](https://help.github.com/).
 
-## Directory Structure
+##Directory Structure
 The directory structure follows the standard layout for Android apps being developed in Android Studio.
 
 The following describes the primary directories and their contexts.
@@ -53,11 +53,11 @@ Other options, such as making the project and generating the APK package, could 
 
 You can also use the command line. On the root of the project you can run
 
-	`./gradlew assembleDebug`
+	./gradlew assembleDebug
 
 Which will build the project in debug mode. You can also run
 
-	`./gradlew clean`
+	./gradlew clean
 
 To remove any files created from the build. 
 See [this link](http://developer.android.com/tools/building/building-cmdline.html) for more information on building on the command line.
@@ -80,14 +80,15 @@ The format is: ‘geo fix <longitude> <latitude>’
 so doing 'geo fix -122.31544733 47.6528135881'  will show your location on UW campus
 
 
-## Nightly Builds
-Follow this guide to configure sendmail on mac:
-http://www.developerfiles.com/how-to-send-emails-from-localhost-mac-os-x-el-capitan/
+##Nightly Builds
+Follow [this guide](http://www.developerfiles.com/how-to-send-emails-from-localhost-mac-os-x-el-capitan/) to configure sendmail on mac:
 
 Add a cronjob though the terminal:
+	
 	crontab -e
 
 This should open the editor, so add:
+	
 	MAILTO=”youemail”
 	*/
 
@@ -98,9 +99,9 @@ After an updated version of the project is built and tested, it is recommended t
 After the files in the master branch are updated, the related download links should also be added on the `README.md` file  and the [Product Website](http://matchonthestreet.github.io/MatchOnTheStreet/).
 
 ###Download links for .apk, .tar.gz, .zip files:
-* **.apk file: **Normally, the `.apk` file would be stored under `https://github.com/MatchOnTheStreet/MatchOnTheStreet/app/build/outputs/apk`. 
-* **.tar.gz file: **`https://github.com/MatchOnTheStreet/MatchOnTheStreet/tarball/master`
-* **.zip file: **`https://github.com/MatchOnTheStreet/MatchOnTheStreet/zipball/master`
+* _.apk file:_ Normally, the `.apk` file would be stored under `https://github.com/MatchOnTheStreet/MatchOnTheStreet/app/build/outputs/apk`. 
+* _.tar.gz file:_ `https://github.com/MatchOnTheStreet/MatchOnTheStreet/tarball/master`
+* _.zip file:_ `https://github.com/MatchOnTheStreet/MatchOnTheStreet/zipball/master`
 
 ###Updating the website:
 The [Product Website](http://matchonthestreet.github.io/MatchOnTheStreet/) is generated using the [Github Pages](https://pages.github.com/), and is store under the `gh-pages` branch of the project repository.  To add the download links to the website, open `index.html` and look for `<aside>` tags like the following, then modify the `href` attribute of the corresponding download links.
