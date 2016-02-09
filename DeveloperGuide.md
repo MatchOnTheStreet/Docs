@@ -47,7 +47,7 @@ To import this project from Github, you need to install [Git](https://git-scm.co
 
 Once you have Git installed, open Android Studio. If you see the window "Welcome to Android Studio", click on "Check out project from Version Control".
 
-![as-welcome](https://github.com/MatchOnTheStreet/Docs/blob/master/img/5-opening-window.png)
+![as-welcome](https://github.com/MatchOnTheStreet/Docs/blob/master/img/5-opening-checkout.png)
 
 Otherwise, in the menu bar, choose "File"->"New"->"Project from Version Control"->"GitHub"
 
