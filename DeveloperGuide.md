@@ -43,6 +43,20 @@ Note that the directories may appear differently when viewed in android studio.
 ##Opening the Project in an IDE
 The application is mainly developed using [Android Studio](https://developer.android.com/tools/studio/index.html) based on [IntelliJ IDEA](https://www.jetbrains.com/idea/). Another valid option for the IDE would be [Eclipse](https://eclipse.org/). Here is a [tutorial](http://www.instructables.com/id/How-To-Setup-Eclipse-for-Android-App-Development/) on how to set up the Android Software Development Kit in Eclipse. The following instructions will be based on Android Studio.
 
+To import this project from Github, you need to install [Git](https://git-scm.com/). One simple way of doing this is through installing [GitHub Desktop](https://desktop.github.com/).
+
+Once you have Git installed, open Android Studio. If you see the window "Welcome to Android Studio", click on "Check out project from Version Control".
+
+![as-welcome](https://github.com/MatchOnTheStreet/Docs/blob/master/img/5-opening-window.png)
+
+Otherwise, in the menu bar, choose "File"->"New"->"Project from Version Control"->"GitHub"
+
+![as-import-cvs](https://github.com/MatchOnTheStreet/Docs/blob/master/img/5-opening-dropdownlist.png)
+
+In the popup window, type in the URL of the repository to be checked out, along with other required information. Follow the instructions given by Android Studio, and the project import should be successful. Note that it might take up to several minutes for Android Studio to sync and build the project.
+
+![as-import-window](https://github.com/MatchOnTheStreet/Docs/blob/master/img/5-opening-window.png)
+
 ##Building the Project
 The application is built using the integrated build system [Gradle](http://developer.android.com/sdk/installing/studio-build.html) of Android Studio. 
 Normally, Gradle will automatically build the project after it is opened in Android Studio. To manually do this, click on the “Build” option in the menu bar, and then choose “Rebuild project”.
