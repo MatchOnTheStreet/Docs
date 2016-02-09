@@ -57,6 +57,8 @@ In the popup window, type in the URL of the repository to be checked out, along 
 
 ![as-import-window](https://github.com/MatchOnTheStreet/Docs/blob/master/img/5-opening-window.png)
 
+[Here](http://javapapers.com/android/android-studio-git-tutorial/) is a useful tutorial on using CVS on Android Studio.
+
 ##Building the Project
 The application is built using the integrated build system [Gradle](http://developer.android.com/sdk/installing/studio-build.html) of Android Studio. 
 Normally, Gradle will automatically build the project after it is opened in Android Studio. To manually do this, click on the “Build” option in the menu bar, and then choose “Rebuild project”.
