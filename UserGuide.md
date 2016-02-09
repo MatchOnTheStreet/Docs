@@ -22,13 +22,13 @@ Press one of these events to see more information.
 
 ##Browsing Events
 MOTS has two primary ways to browse sporting events that work similarly to Yelp: 
-The Map, where you can visualize the events happening around you or a specific area.
-Works just like google maps where you can find your location and see the events around you.
-The search bar can be used to see events in a specific location. Eg. searching “Seattle” will display the events around Seattle.
-The List, which allows you to search and filter down events to your liking. 
-To apply a filter on search results (e.g. names with “basketball”), tap on the floating action button with the filter icon, and type “basketball” into the search bar.
-Selecting an event from the list will bring up another screen with the details of that event. Pressing the back button from here will return you to your search results.
-Clicking on the back button or the floating action button with the map icon will bring you back to the map view.
+* The Map, where you can visualize the events happening around you or a specific area.
+  1. Works just like google maps where you can find your location and see the events around you.
+  2. The search bar can be used to see events in a specific location. Eg. searching “Seattle” will display the events around Seattle.
+* The List, which allows you to search and filter down events to your liking. 
+  1. To apply a filter on search results (e.g. names with “basketball”), tap on the floating action button with the filter icon, and type “basketball” into the search bar.
+  2. Selecting an event from the list will bring up another screen with the details of that event. Pressing the back button from here will return you to your search results.
+  3. Clicking on the back button or the floating action button with the map icon will bring you back to the map view.
 
 ##Creating Events
 If you can’t find a sporting event that fits your requirements, you can create your own! Events can be created from either the Map or the List by pressing the create event button on the bottom left of the screen (with a ‘+’  icon). On the create event screen you are able to detail the sporting event in several ways:
