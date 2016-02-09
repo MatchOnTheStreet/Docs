@@ -92,7 +92,7 @@ Add a cronjob though the terminal:
 This should open the editor, so add:
 	
 	MAILTO=”youemail”
-	*/
+	*/10 23 * * * <path to ci.sh>
 
 
 ##Releasing a New Version
