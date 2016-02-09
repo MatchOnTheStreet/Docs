@@ -107,8 +107,10 @@ Add a cronjob though the terminal:
 
 This should open the editor, so add:
 	
-	MAILTO=”youemail”
-	*/10 23 * * * <path to ci.sh>
+	MAILTO=”your_email”
+	*/10 23 * * * <path to ci.sh> <base_directory> <name_of_tmp_directory> <path_to_android_sdk>
+
+Note that the file should have an empty line at the end.
 
 
 ##Releasing a New Version
