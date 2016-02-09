@@ -53,7 +53,7 @@ Otherwise, in the menu bar, choose "File"->"New"->"Project from Version Control"
 
 ![as-import-cvs](https://github.com/MatchOnTheStreet/Docs/blob/master/img/5-opening-dropdownlist.png)
 
-In the popup window, type in the URL of the repository to be checked out, along with other required information. Follow the instructions given by Android Studio, and the project import should be successful. Note that it might take up to several minutes for Android Studio to sync and build the project.
+In the popup window, type in the URL (https://github.com/MatchOnTheStreet/MatchOnTheStreet) of the repository to be checked out, along with other required information. Follow the instructions given by Android Studio, and the project import should be successful. Note that it might take up to several minutes for Android Studio to sync and build the project.
 
 ![as-import-window](https://github.com/MatchOnTheStreet/Docs/blob/master/img/5-opening-window.png)
 
