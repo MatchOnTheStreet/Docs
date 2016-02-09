@@ -47,7 +47,7 @@ The application is mainly developed using [Android Studio](https://developer.and
 The application is built using the integrated build system [Gradle](http://developer.android.com/sdk/installing/studio-build.html) of Android Studio. 
 Normally, Gradle will automatically build the project after it is opened in Android Studio. To manually do this, click on the “Build” option in the menu bar, and then choose “Rebuild project”.
 
-![menubar](img\1-menubar.png)
+![menubar](https://github.com/MatchOnTheStreet/Docs/blob/master/img/1-menubar.png)
 
 Other options, such as making the project and generating the APK package, could also be accessed under this menu.
 
@@ -64,6 +64,7 @@ See [this link](http://developer.android.com/tools/building/building-cmdline.htm
 
 The build process of Gradle follows the procedures denoted by the following diagram: 
 
+![process-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/2-diagram.png)
 
 ##Testing Location Services
 Since this app requires your location, you will need to give it permissions in the settings of your device:
@@ -79,6 +80,7 @@ Note that the emulator will not emulate location services automatically, you mus
 The format is: ‘geo fix <longitude> <latitude>’ 
 so doing 'geo fix -122.31544733 47.6528135881'  will show your location on UW campus
 
+![cmdline](https://github.com/MatchOnTheStreet/Docs/blob/master/img/3-cmdline.png)
 
 ##Nightly Builds
 Follow [this guide](http://www.developerfiles.com/how-to-send-emails-from-localhost-mac-os-x-el-capitan/) to configure sendmail on mac:
