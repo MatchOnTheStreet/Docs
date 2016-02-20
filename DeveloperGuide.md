@@ -6,10 +6,11 @@
 3. Opening the Project in an IDE
 4. Building the Project
 5. Testing Location Services
-6. Nightly Builds
-7. Releasing a New Version
-8. Bug reports
-9. Design Patterns
+6. Unit Tests
+7. Nightly Builds
+8. Releasing a New Version
+9. Bug reports
+10. Design Patterns
 
 ##Obtaining the Source Code
 To get the source code for Match on the Street, visit [this link to our github page](http://matchonthestreet.github.io/MatchOnTheStreet/). For direct access to our repository, visit [this link](https://github.com/MatchOnTheStreet/MatchOnTheStreet). 
@@ -98,6 +99,26 @@ The format is: ‘geo fix <longitude> <latitude>’
 so doing 'geo fix -122.31544733 47.6528135881'  will show your location on UW campus
 
 ![cmdline](https://github.com/MatchOnTheStreet/Docs/blob/master/img/3-cmdline.png)
+
+##Unit Tests
+Unit tests can be found under `.../MatchOnTheStreet/app/src/test/java/com/cse403/matchonthestreet/`. You should be able to run it directly from Android Studio: 
+
+The Android Plugin for Gradle compiles the local unit test code located in the default directory (src/test/java), builds a test app, and executes it locally using the default test runner class.
+
+To run local unit tests in your Gradle project from Android Studio:
+
+1. In the Project window, right click on the project and synchronize your project.
+2. Open the Build Variants window by clicking the left-hand tab, then change the test artifact to Unit Tests.
+3. In the Project window, drill down to your unit test class or method, then right-click and run it. To run all tests in the unit test directory, select the directory then right-click and press Run tests.
+4. Android Studio displays the results of the unit test execution in the Run window.
+
+To run local unit tests in your Gradle project from the command-line, call the test task command.
+
+`./gradlew test`
+
+If there are failing tests, the command will display links to HTML reports (one per build variant). You can find the generated HTML test result reports in the <path_to_your_project>/app/build/reports/tests/ directory, and the corresponding XML files in the <path_to_your_project>/app/build/test-results/ directory.
+
+For more information on creating and conducting unit tests in Android Studio, follow [this link](http://developer.android.com/training/testing/start/index.html#run-local-tests).
 
 ##Nightly Builds
 Follow [this guide](http://www.developerfiles.com/how-to-send-emails-from-localhost-mac-os-x-el-capitan/) to configure sendmail on mac:
