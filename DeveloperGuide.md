@@ -9,6 +9,7 @@
 6. Nightly Builds
 7. Releasing a New Version
 8. Bug reports
+9. Design Patterns
 
 ##Obtaining the Source Code
 To get the source code for Match on the Street, visit [this link to our github page](http://matchonthestreet.github.io/MatchOnTheStreet/). For direct access to our repository, visit [this link](https://github.com/MatchOnTheStreet/MatchOnTheStreet). 
@@ -132,7 +133,9 @@ The [Product Website](http://matchonthestreet.github.io/MatchOnTheStreet/) is ge
 Currently we are using [a public Google Form](http://goo.gl/forms/Y5O8jgcr0i) to register bug reports. A complete record of existing bugs could be accessed [here](https://docs.google.com/spreadsheets/d/164tTaI434cTdc8Asoq-i0H_Auo0y6LtOJhLn8qNfMXQ/edit).
 
 ##Design Patterns
-* DBManager
+* Singleton pattern
 	* The DBManager Class uses the Singleton Pattern. It does not make sense
 	for the application to have more than one DBManager. For that reason the
 	the class has been made static, and given a private constructor.
+* Factory pattern
+	* In the `ListViewActivity`, we implemented  `SetTextDatePickerDialog` using the Factory Pattern. Because the `DatePickerDialog` objects for different entry fields are just trivially different, we used a getPick() method inside this class instead of calling different constructors everytime. By doing so the code redundancy was reduced effectively.
