@@ -160,3 +160,4 @@ Currently we are using [a public Google Form](http://goo.gl/forms/Y5O8jgcr0i) to
 	the class has been made static, and given a private constructor.
 * Factory pattern
 	* In the `ListViewActivity`, we implemented  `SetTextDatePickerDialog` using the Factory Pattern. Because the `DatePickerDialog` objects for different entry fields are just trivially different, we used a getPick() method inside this class instead of calling different constructors everytime. By doing so the code redundancy was reduced effectively.
+![fac-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/9-factory-pattern.png)
