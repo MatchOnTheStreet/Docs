@@ -134,7 +134,7 @@ Currently we are using [a public Google Form](http://goo.gl/forms/Y5O8jgcr0i) to
 
 ##Design Patterns
 * Singleton pattern
-	* The DBManager Class uses the Singleton Pattern. It does not make sense
+	* The `DBManager` Class uses the Singleton Pattern. It does not make sense
 	for the application to have more than one DBManager. For that reason the
 	the class has been made static, and given a private constructor.
 * Factory pattern
