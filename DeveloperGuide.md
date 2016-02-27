@@ -151,7 +151,9 @@ The [Product Website](http://matchonthestreet.github.io/MatchOnTheStreet/) is ge
 ![html-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/4-html.png)
 
 ##Bug reports
-Currently we are using [a public Google Form](http://goo.gl/forms/Y5O8jgcr0i) to register bug reports. A complete record of existing bugs could be accessed [here](https://docs.google.com/spreadsheets/d/164tTaI434cTdc8Asoq-i0H_Auo0y6LtOJhLn8qNfMXQ/edit).
+You are very welcomed to report a bug to our [Github Issues](https://github.com/MatchOnTheStreet/MatchOnTheStreet/issues) section.
+
+Previously we were using a public Google Form to register bug reports. A record of previously existing bugs could be accessed [here](https://docs.google.com/spreadsheets/d/164tTaI434cTdc8Asoq-i0H_Auo0y6LtOJhLn8qNfMXQ/edit).
 
 ##Design Patterns
 * Singleton pattern
