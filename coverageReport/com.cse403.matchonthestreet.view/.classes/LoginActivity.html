@@ -1,0 +1,368 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoginActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.cse403.matchonthestreet.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoginActivity (com.cse403.matchonthestreet.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 31)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LoginActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LoginActivity$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LoginActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LoginActivity$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 88)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.cse403.matchonthestreet.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.ActionBar;
+<i>4</i>&nbsp;import android.content.Intent;
+<i>5</i>&nbsp;import android.content.SharedPreferences;
+<i>6</i>&nbsp;import android.location.Location;
+<i>7</i>&nbsp;import android.os.AsyncTask;
+<i>8</i>&nbsp;import android.os.Bundle;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import com.cse403.matchonthestreet.R;
+<i>11</i>&nbsp;import com.cse403.matchonthestreet.backend.DBManager;
+<i>12</i>&nbsp;import com.cse403.matchonthestreet.controller.MOTSApp;
+<i>13</i>&nbsp;import com.cse403.matchonthestreet.models.Account;
+<i>14</i>&nbsp;import com.cse403.matchonthestreet.models.Event;
+<i>15</i>&nbsp;import com.facebook.Profile;
+<i>16</i>&nbsp;import com.facebook.ProfileTracker;
+<i>17</i>&nbsp;import com.facebook.login.widget.LoginButton;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import android.util.Log;
+<i>20</i>&nbsp;import android.widget.TextView;
+<i>21</i>&nbsp;import android.widget.Toolbar;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import com.facebook.CallbackManager;
+<i>24</i>&nbsp;import com.facebook.FacebookCallback;
+<i>25</i>&nbsp;import com.facebook.FacebookException;
+<i>26</i>&nbsp;import com.facebook.FacebookSdk;
+<i>27</i>&nbsp;import com.facebook.login.LoginResult;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;import java.sql.SQLException;
+<i>30</i>&nbsp;import java.util.ArrayList;
+<i>31</i>&nbsp;import java.util.List;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;/**
+<i>34</i>&nbsp; * Simple facebook login page. Allows the user to log into the app through Facebook.
+<i>35</i>&nbsp; */
+<b class="nc"><i>36</i>&nbsp;public class LoginActivity extends NavActivity {</b>
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    private CallbackManager callbackManager;
+<i>39</i>&nbsp;    private TextView info;
+<i>40</i>&nbsp;    private LoginButton loginButton;
+<i>41</i>&nbsp;    private static final String TAG = &quot;LoginActivity&quot;;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    @Override
+<i>45</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>46</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<i>47</i>&nbsp;
+<b class="nc"><i>48</i>&nbsp;        ActionBar actionBar = getActionBar();</b>
+<b class="nc"><i>49</i>&nbsp;        if (actionBar != null) {</b>
+<b class="nc"><i>50</i>&nbsp;            getActionBar().hide();</b>
+<i>51</i>&nbsp;        }
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;        FacebookSdk.sdkInitialize(getApplicationContext());</b>
+<i>54</i>&nbsp;
+<b class="nc"><i>55</i>&nbsp;        setContentView(R.layout.activity_login);</b>
+<b class="nc"><i>56</i>&nbsp;        info = (TextView)findViewById(R.id.info);</b>
+<b class="nc"><i>57</i>&nbsp;        loginButton = (LoginButton)findViewById(R.id.login_button);</b>
+<b class="nc"><i>58</i>&nbsp;        loginButton.setReadPermissions(&quot;public_profile&quot;);</b>
+<b class="nc"><i>59</i>&nbsp;        callbackManager = CallbackManager.Factory.create();</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;        // Skips to the MapsActivity if a user has already logged in before
+<i>62</i>&nbsp;        // probably a better way to check this using the facebook API though. --Lance
+<b class="nc"><i>63</i>&nbsp;        Intent navIntent = getIntent();</b>
+<i>64</i>&nbsp;
+<b class="nc"><i>65</i>&nbsp;        SharedPreferences mPrefs = getSharedPreferences(&quot;userPrefs&quot;, 0);</b>
+<b class="nc"><i>66</i>&nbsp;        String mString = mPrefs.getString(&quot;FBUserID&quot;, &quot;not found&quot;);</b>
+<b class="nc"><i>67</i>&nbsp;        if (!mString.equals(&quot;not found&quot;) &amp;&amp; !navIntent.getBooleanExtra(&quot;fromSidebar&quot;, false)) {</b>
+<b class="nc"><i>68</i>&nbsp;            getUserFromDB();</b>
+<b class="nc"><i>69</i>&nbsp;            Intent intent = new Intent(LoginActivity.this, MapsActivity.class);</b>
+<b class="nc"><i>70</i>&nbsp;            startActivity(intent);</b>
+<i>71</i>&nbsp;        }
+<i>72</i>&nbsp;
+<b class="nc"><i>73</i>&nbsp;        loginButton.registerCallback(callbackManager, new FacebookCallback&lt;LoginResult&gt;() {</b>
+<i>74</i>&nbsp;            private ProfileTracker mProfileTracker;
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;            @Override
+<i>77</i>&nbsp;            public void onSuccess(LoginResult loginResult) {
+<b class="nc"><i>78</i>&nbsp;                if (Profile.getCurrentProfile() == null) {</b>
+<b class="nc"><i>79</i>&nbsp;                    mProfileTracker = new ProfileTracker() {</b>
+<i>80</i>&nbsp;                        @Override
+<i>81</i>&nbsp;                        protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+<b class="nc"><i>82</i>&nbsp;                            Log.d(TAG, currentProfile.getName());</b>
+<b class="nc"><i>83</i>&nbsp;                            mProfileTracker.stopTracking();</b>
+<i>84</i>&nbsp;
+<b class="nc"><i>85</i>&nbsp;                            Profile profile = Profile.getCurrentProfile();</b>
+<b class="nc"><i>86</i>&nbsp;                            if (profile != null) {</b>
+<b class="nc"><i>87</i>&nbsp;                                Account me = new Account((int) Long.parseLong(profile.getId()), profile.getName());</b>
+<b class="nc"><i>88</i>&nbsp;                                ((MOTSApp) getApplication()).setMyAccount(me);</b>
+<b class="nc"><i>89</i>&nbsp;                                Account accnt = ((MOTSApp) getApplication()).getMyAccount();</b>
+<b class="nc"><i>90</i>&nbsp;                                Log.d(TAG, &quot;my account is: &quot; + accnt.getName());</b>
+<b class="nc"><i>91</i>&nbsp;                                saveUserIDtoDB(accnt);</b>
+<i>92</i>&nbsp;                            }
+<i>93</i>&nbsp;                        }
+<i>94</i>&nbsp;                    };
+<b class="nc"><i>95</i>&nbsp;                    mProfileTracker.startTracking();</b>
+<i>96</i>&nbsp;                } else {
+<b class="nc"><i>97</i>&nbsp;                    Profile profile = Profile.getCurrentProfile();</b>
+<b class="nc"><i>98</i>&nbsp;                    Log.d(TAG, profile.getName());</b>
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;                }
+<b class="nc"><i>101</i>&nbsp;                info.setText(&quot;User ID:  &quot; + loginResult.getAccessToken().getUserId());</b>
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;                // Saves the userID to the sharedpreferences which saves to the device memory
+<i>106</i>&nbsp;                // so we can verify that a user has logged in with FB. probably a better way
+<i>107</i>&nbsp;                // to do this using the facebook API. --Lance
+<b class="nc"><i>108</i>&nbsp;                SharedPreferences mPrefs = getSharedPreferences(&quot;userPrefs&quot;, 0);</b>
+<b class="nc"><i>109</i>&nbsp;                SharedPreferences.Editor mEditor = mPrefs.edit();</b>
+<b class="nc"><i>110</i>&nbsp;                mEditor.putString(&quot;userID&quot;, loginResult.getAccessToken().getUserId());</b>
+<b class="nc"><i>111</i>&nbsp;                mEditor.commit();</b>
+<i>112</i>&nbsp;
+<b class="nc"><i>113</i>&nbsp;                Intent intent = new Intent(LoginActivity.this, MapsActivity.class);</b>
+<b class="nc"><i>114</i>&nbsp;                startActivity(intent);</b>
+<i>115</i>&nbsp;            }
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;            @Override
+<i>118</i>&nbsp;            public void onCancel() {
+<b class="nc"><i>119</i>&nbsp;                info.setText(&quot;Login attempt cancelled.&quot;);</b>
+<i>120</i>&nbsp;            }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;            @Override
+<i>123</i>&nbsp;            public void onError(FacebookException e) {
+<b class="nc"><i>124</i>&nbsp;                info.setText(&quot;Login attempt failed.&quot;);</b>
+<i>125</i>&nbsp;            }
+<i>126</i>&nbsp;        });
+<i>127</i>&nbsp;    }
+<i>128</i>&nbsp;
+<i>129</i>&nbsp;    private void getUserFromDB() {
+<b class="nc"><i>130</i>&nbsp;        Log.d(TAG, &quot;GetUserFromDB&quot;);</b>
+<b class="nc"><i>131</i>&nbsp;        SharedPreferences mPrefs = getSharedPreferences(&quot;userPrefs&quot;, 0);</b>
+<b class="nc"><i>132</i>&nbsp;        String mString = mPrefs.getString(&quot;FBUserID&quot;, &quot;not found&quot;);</b>
+<b class="nc"><i>133</i>&nbsp;        AsyncTask&lt;Integer, Account, Account&gt; task = new AsyncTask&lt;Integer, Account, Account&gt;() {</b>
+<i>134</i>&nbsp;            @Override
+<i>135</i>&nbsp;            protected Account doInBackground(Integer[] params) {
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;                try {
+<b class="nc"><i>138</i>&nbsp;                    if (params.length == 1) {</b>
+<b class="nc"><i>139</i>&nbsp;                        int uid = params[0];</b>
+<b class="nc"><i>140</i>&nbsp;                        Account account = DBManager.getAccountById(uid);</b>
+<b class="nc"><i>141</i>&nbsp;                        if (account != null) {</b>
+<b class="nc"><i>142</i>&nbsp;                            return account;</b>
+<i>143</i>&nbsp;                        }
+<i>144</i>&nbsp;                    }
+<b class="nc"><i>145</i>&nbsp;                } catch (ClassNotFoundException e) {</b>
+<b class="nc"><i>146</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>147</i>&nbsp;                } catch (SQLException e) {</b>
+<b class="nc"><i>148</i>&nbsp;                    Log.d(TAG, &quot;SQL Exception&quot;);</b>
+<b class="nc"><i>149</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>150</i>&nbsp;                }</b>
+<b class="nc"><i>151</i>&nbsp;                return null;</b>
+<i>152</i>&nbsp;            }
+<i>153</i>&nbsp;            @Override
+<i>154</i>&nbsp;            protected void onPostExecute(Account account) {
+<b class="nc"><i>155</i>&nbsp;                if (account != null) {</b>
+<b class="nc"><i>156</i>&nbsp;                    ((MOTSApp) getApplication()).setMyAccount(account);</b>
+<b class="nc"><i>157</i>&nbsp;                    Log.d(TAG, &quot;received account from db: &quot; + account.getName());</b>
+<i>158</i>&nbsp;                } else {
+<b class="nc"><i>159</i>&nbsp;                    Log.d(TAG, &quot;account returned from db is null&quot;);</b>
+<i>160</i>&nbsp;                }
+<i>161</i>&nbsp;            }
+<i>162</i>&nbsp;        };
+<b class="nc"><i>163</i>&nbsp;        task.execute(Integer.parseInt(mString));</b>
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    }
+<i>166</i>&nbsp;    private void saveUserIDtoDB(Account account) {
+<i>167</i>&nbsp;
+<b class="nc"><i>168</i>&nbsp;        SharedPreferences mPrefs = getSharedPreferences(&quot;userPrefs&quot;, 0);</b>
+<b class="nc"><i>169</i>&nbsp;        SharedPreferences.Editor mEditor = mPrefs.edit();</b>
+<b class="nc"><i>170</i>&nbsp;        mEditor.putString(&quot;FBUserID&quot;, &quot;&quot; + account.getUid());</b>
+<b class="nc"><i>171</i>&nbsp;        mEditor.apply();</b>
+<i>172</i>&nbsp;
+<b class="nc"><i>173</i>&nbsp;        AsyncTask&lt;Account, Account, Account&gt; task = new AsyncTask&lt;Account, Account, Account&gt;() {</b>
+<i>174</i>&nbsp;            @Override
+<i>175</i>&nbsp;            protected Account doInBackground(Account[] params) {
+<i>176</i>&nbsp;                try {
+<b class="nc"><i>177</i>&nbsp;                    if (params.length == 1) {</b>
+<b class="nc"><i>178</i>&nbsp;                        Account account1 = params[0];</b>
+<b class="nc"><i>179</i>&nbsp;                        String uid = &quot;&quot; + account1.getUid();</b>
+<b class="nc"><i>180</i>&nbsp;                        String name = account1.getName();</b>
+<b class="nc"><i>181</i>&nbsp;                        Log.d(TAG, &quot;Adding account to dB: &quot; + name + &quot; &quot; + uid);</b>
+<b class="nc"><i>182</i>&nbsp;                        DBManager.addAccount(account1);</b>
+<i>183</i>&nbsp;                    }
+<b class="nc"><i>184</i>&nbsp;                    return null;</b>
+<b class="nc"><i>185</i>&nbsp;                } catch (ClassNotFoundException e) {</b>
+<b class="nc"><i>186</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>187</i>&nbsp;                } catch (SQLException e) {</b>
+<b class="nc"><i>188</i>&nbsp;                    Log.d(TAG, &quot;SQL Exception&quot;);</b>
+<b class="nc"><i>189</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>190</i>&nbsp;                }</b>
+<b class="nc"><i>191</i>&nbsp;                return null;</b>
+<i>192</i>&nbsp;            }
+<i>193</i>&nbsp;        };
+<i>194</i>&nbsp;
+<b class="nc"><i>195</i>&nbsp;        task.execute(account);</b>
+<i>196</i>&nbsp;    }
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;    @Override
+<i>199</i>&nbsp;    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+<b class="nc"><i>200</i>&nbsp;        callbackManager.onActivityResult(requestCode, resultCode, data);</b>
+<i>201</i>&nbsp;    }
+<i>202</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-02-26 21:49</div>
+</div>
+</body>
+</html>

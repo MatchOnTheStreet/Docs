@@ -1,0 +1,249 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UserProfileActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.cse403.matchonthestreet.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UserProfileActivity (com.cse403.matchonthestreet.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserProfileActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UserProfileActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">UserProfileActivity$setListEventsTask</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 26)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 45)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.cse403.matchonthestreet.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Intent;
+<i>4</i>&nbsp;import android.location.Location;
+<i>5</i>&nbsp;import android.os.AsyncTask;
+<i>6</i>&nbsp;import android.os.Bundle;
+<i>7</i>&nbsp;import android.util.Log;
+<i>8</i>&nbsp;import android.view.View;
+<i>9</i>&nbsp;import android.widget.ArrayAdapter;
+<i>10</i>&nbsp;import android.widget.Button;
+<i>11</i>&nbsp;import android.widget.ListView;
+<i>12</i>&nbsp;import android.widget.TextView;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import com.cse403.matchonthestreet.R;
+<i>15</i>&nbsp;import com.cse403.matchonthestreet.backend.DBManager;
+<i>16</i>&nbsp;import com.cse403.matchonthestreet.controller.MOTSApp;
+<i>17</i>&nbsp;import com.cse403.matchonthestreet.models.Account;
+<i>18</i>&nbsp;import com.cse403.matchonthestreet.models.Event;
+<i>19</i>&nbsp;import com.facebook.FacebookSdk;
+<i>20</i>&nbsp;import com.facebook.Profile;
+<i>21</i>&nbsp;import com.facebook.login.LoginManager;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import java.sql.SQLException;
+<i>24</i>&nbsp;import java.util.ArrayList;
+<i>25</i>&nbsp;import java.util.HashSet;
+<i>26</i>&nbsp;import java.util.List;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;/**
+<i>29</i>&nbsp; * This class gives the user a view of their profile. Their profile includes their
+<i>30</i>&nbsp; * name and a list of events they are currently signed up to attend.
+<i>31</i>&nbsp; */
+<b class="nc"><i>32</i>&nbsp;public class UserProfileActivity extends NavActivity {</b>
+<i>33</i>&nbsp;    private ListView listView;
+<i>34</i>&nbsp;    private Button button;
+<i>35</i>&nbsp;    private TextView username;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    private static final String TAG = &quot;UserProfileActivity&quot;;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @Override
+<i>42</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>43</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<i>44</i>&nbsp;
+<b class="nc"><i>45</i>&nbsp;        FacebookSdk.sdkInitialize(getApplicationContext());</b>
+<i>46</i>&nbsp;
+<b class="nc"><i>47</i>&nbsp;        setContentView(R.layout.activity_user_profile);</b>
+<i>48</i>&nbsp;
+<b class="nc"><i>49</i>&nbsp;        listView = (ListView) findViewById(android.R.id.list);</b>
+<i>50</i>&nbsp;
+<b class="nc"><i>51</i>&nbsp;        button = (Button) findViewById(android.R.id.button1);</b>
+<b class="nc"><i>52</i>&nbsp;        button.setOnClickListener(new View.OnClickListener() {</b>
+<i>53</i>&nbsp;            public void onClick(View v) {
+<b class="nc"><i>54</i>&nbsp;                LoginManager.getInstance().logOut();</b>
+<b class="nc"><i>55</i>&nbsp;                Intent intent = new Intent(UserProfileActivity.this, LoginActivity.class);</b>
+<b class="nc"><i>56</i>&nbsp;                startActivity(intent);</b>
+<i>57</i>&nbsp;            }
+<i>58</i>&nbsp;        });
+<i>59</i>&nbsp;
+<b class="nc"><i>60</i>&nbsp;        Profile profile = Profile.getCurrentProfile();</b>
+<b class="nc"><i>61</i>&nbsp;        username = (TextView) findViewById(R.id.username);</b>
+<i>62</i>&nbsp;
+<b class="nc"><i>63</i>&nbsp;        if (profile != null) {</b>
+<b class="nc"><i>64</i>&nbsp;            username.setText(profile.getName());</b>
+<i>65</i>&nbsp;        } else {
+<b class="nc"><i>66</i>&nbsp;            username.setText(&quot;null username&quot;);</b>
+<i>67</i>&nbsp;        }
+<b class="nc"><i>68</i>&nbsp;        (new setListEventsTask()).execute();</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    private void addEventsToList(List&lt;String&gt; vals) {
+<b class="nc"><i>74</i>&nbsp;        ArrayAdapter&lt;String&gt; listAdapter = new ArrayAdapter&lt;String&gt;(this, android.R.layout.simple_list_item_1, vals);</b>
+<b class="nc"><i>75</i>&nbsp;        listView.setAdapter(listAdapter);</b>
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<b class="nc"><i>79</i>&nbsp;    private class setListEventsTask extends AsyncTask&lt;Integer, Integer, List&lt;Event&gt;&gt; {</b>
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;        @Override
+<i>82</i>&nbsp;        protected List&lt;Event&gt; doInBackground(Integer... params) {
+<b class="nc"><i>83</i>&nbsp;            Log.d(TAG, &quot;here&quot;);</b>
+<i>84</i>&nbsp;            try {
+<b class="nc"><i>85</i>&nbsp;                Account account = ((MOTSApp) getApplication()).getMyAccount();</b>
+<b class="nc"><i>86</i>&nbsp;                List&lt;Event&gt; events = DBManager.getEventsAttendedByAccount(account);</b>
+<b class="nc"><i>87</i>&nbsp;                Log.d(TAG, account.getName());</b>
+<b class="nc"><i>88</i>&nbsp;                if (events.isEmpty()) {</b>
+<b class="nc"><i>89</i>&nbsp;                    Log.d(TAG, &quot;empty events&quot;);</b>
+<i>90</i>&nbsp;                } else {
+<b class="nc"><i>91</i>&nbsp;                    for (Event e : events) {</b>
+<b class="nc"><i>92</i>&nbsp;                        Log.d(TAG, e.title);</b>
+<b class="nc"><i>93</i>&nbsp;                    }</b>
+<i>94</i>&nbsp;                }
+<b class="nc"><i>95</i>&nbsp;                return events;</b>
+<b class="nc"><i>96</i>&nbsp;            } catch (ClassNotFoundException e) {</b>
+<b class="nc"><i>97</i>&nbsp;                Log.d(TAG, &quot;ClassNotFoundException&quot;);</b>
+<b class="nc"><i>98</i>&nbsp;                e.printStackTrace();</b>
+<b class="nc"><i>99</i>&nbsp;            } catch (SQLException e) {</b>
+<b class="nc"><i>100</i>&nbsp;                Log.d(TAG, &quot;SQL Exception&quot;);</b>
+<b class="nc"><i>101</i>&nbsp;                e.printStackTrace();</b>
+<b class="nc"><i>102</i>&nbsp;            }</b>
+<b class="nc"><i>103</i>&nbsp;            return null;</b>
+<i>104</i>&nbsp;        }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;        protected void onPostExecute(List&lt;Event&gt; events) {
+<b class="nc"><i>107</i>&nbsp;            Log.d(TAG, &quot;On Post Execute&quot;);</b>
+<b class="nc"><i>108</i>&nbsp;            if (events != null) {</b>
+<b class="nc"><i>109</i>&nbsp;                List&lt;String&gt; vals = new ArrayList&lt;String&gt;();</b>
+<b class="nc"><i>110</i>&nbsp;                for (Event e : events) {</b>
+<b class="nc"><i>111</i>&nbsp;                    vals.add(e.title + &quot;: &quot; + e.description);</b>
+<b class="nc"><i>112</i>&nbsp;                    addEventsToList(vals);</b>
+<i>113</i>&nbsp;
+<b class="nc"><i>114</i>&nbsp;                }</b>
+<i>115</i>&nbsp;            }
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;        }
+<i>118</i>&nbsp;
+<i>119</i>&nbsp;    };
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-02-26 21:49</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,684 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DBManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.cse403.matchonthestreet.backend</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DBManager (com.cse403.matchonthestreet.backend)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DBManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75.7%
+  </span>
+  <span class="absValue">
+    (28/ 37)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (199/ 239)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.cse403.matchonthestreet.backend;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.location.Location;
+<i>4</i>&nbsp;import android.util.Log;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import com.cse403.matchonthestreet.models.Account;
+<i>7</i>&nbsp;import com.cse403.matchonthestreet.models.Event;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.sql.*;
+<i>10</i>&nbsp;import java.util.*;
+<i>11</i>&nbsp;import java.util.Date;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;/**
+<i>14</i>&nbsp; * Created by Iris on 2/7/16.
+<i>15</i>&nbsp; *
+<i>16</i>&nbsp; * DBManager performs all backend computations on data. It can add and retrieve items from the
+<i>17</i>&nbsp; * database, whose schema is define in file scripts/createTables.sql.
+<i>18</i>&nbsp; *
+<i>19</i>&nbsp; */
+<i>20</i>&nbsp;public final class DBManager {
+<i>21</i>&nbsp;    // JDBC driver name and database URL
+<i>22</i>&nbsp;    private static final String JDBC_DRIVER = &quot;com.mysql.jdbc.Driver&quot;;
+<i>23</i>&nbsp;    private static final String DB_URL = &quot;jdbc:mysql://matchonthestreetdb.crqizzvrxges.us-east-1.rds.amazonaws.com:3306/motsdb&quot;;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    //  Database credentials
+<i>26</i>&nbsp;    private static final String USER = &quot;larioj&quot;;
+<i>27</i>&nbsp;    private static final String PASS = &quot;motspassword&quot;;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    // Queries
+<i>30</i>&nbsp;    private static final String CREATE_ACCOUNT_SQL =
+<i>31</i>&nbsp;            &quot;INSERT INTO Accounts (uid, name) VALUES(?,?);&quot;;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    private static final String ADD_ACCOUNT_TO_EVENT_SQL =
+<i>34</i>&nbsp;            &quot;INSERT INTO Attending (uid, eid) VALUES (?, ?);&quot;;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    private static final String ADD_EVENT_SQL =
+<i>37</i>&nbsp;            &quot;INSERT INTO Events &quot;
+<i>38</i>&nbsp;                    + &quot;(eid, title, longitude, latitude, start_time, duration, time_created, description) &quot;
+<i>39</i>&nbsp;                    + &quot;VALUES (?,?,?,?,?,?,?,?);&quot;;
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    private static final String GET_EVENTS_IN_RADIUS_SQL =
+<i>42</i>&nbsp;            &quot;SELECT * FROM Events e WHERE e.latitude &lt; ? AND e.latitude &gt; ? &quot;
+<i>43</i>&nbsp;                    + &quot;AND e.longitude &lt; ? AND e.longitude &gt; ?;&quot;;
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    private static final String GET_EVENT_BY_ID_SQL =
+<i>46</i>&nbsp;            &quot;SELECT * FROM Events WHERE eid = ?;&quot;;
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    private static final String GET_ACCOUNT_BY_ID_SQL =
+<i>49</i>&nbsp;            &quot;SELECT * FROM Accounts WHERE uid = ?;&quot;;
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    private static final String GET_EVENTS_ATTENDED_BY_ACCOUNT_SQL
+<i>52</i>&nbsp;            = &quot;SELECT e.eid AS eid, e.title AS title, e.longitude AS longitude, &quot;
+<i>53</i>&nbsp;            + &quot;e.latitude AS latitude, e.start_time AS start_time, &quot;
+<i>54</i>&nbsp;            + &quot;e.duration AS duration, e.time_created AS time_created, &quot;
+<i>55</i>&nbsp;            + &quot;e.description AS description &quot;
+<i>56</i>&nbsp;            + &quot;FROM Events e, Attending a &quot;
+<i>57</i>&nbsp;            + &quot;WHERE a.uid = ? AND a.eid = e.eid&quot;;
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    private static final String GET_ACCOUNTS_ATTENDING_EVENT_SQL
+<i>60</i>&nbsp;            = &quot;SELECT a.uid AS uid, a.name AS name &quot;
+<i>61</i>&nbsp;            + &quot;FROM Accounts a, Attending at &quot;
+<i>62</i>&nbsp;            + &quot;WHERE at.eid = ? AND at.uid = a.uid;&quot;;
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    private static final String GET_COUNT_OF_ACCOUNTS_ATTENDING_EVENT_SQL
+<i>65</i>&nbsp;            = &quot;SELECT COUNT(*) &quot;
+<i>66</i>&nbsp;            + &quot;FROM Accounts a, Attending at &quot;
+<i>67</i>&nbsp;            + &quot;WHERE at.eid = ? AND at.uid = a.uid;&quot;;
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    private static final String REMOVE_EVENT_SQL
+<i>70</i>&nbsp;            = &quot;DELETE FROM Events WHERE eid=?;&quot;;
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    private static final String REMOVE_ACCOUNT_SQL
+<i>73</i>&nbsp;            = &quot;DELETE FROM Accounts WHERE uid=?;&quot;;
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    private static final String REMOVE_ATTENDANCE_SQL
+<i>76</i>&nbsp;            = &quot;DELETE FROM Attending WHERE uid=? AND eid=?&quot;;
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    // For testing.
+<i>79</i>&nbsp;    private static final String CHECK_ATTENDANCE_SQL
+<i>80</i>&nbsp;            = &quot;SELECT * From Attending WHERE uid=? AND eid=?&quot;;
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    private static final String REMOVE_EVENT_ATTENDANCE_SQL
+<i>83</i>&nbsp;            = &quot;DELETE FROM Attending WHERE eid=?&quot;;
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    private static final String REMOVE_ACCOUNT_ATTENDANCE_SQL
+<i>86</i>&nbsp;            = &quot;DELETE FROM Attending WHERE uid=?&quot;;
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;    /* transactions */
+<i>89</i>&nbsp;    private static final String BEGIN_TRANSACTION_SQL =
+<i>90</i>&nbsp;            &quot;SET TRANSACTION ISOLATION LEVEL SERIALIZABLE; BEGIN TRANSACTION&quot;;
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    private static final String COMMIT_SQL = &quot;COMMIT TRANSACTION&quot;;
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    private static final String ROLLBACK_SQL = &quot;ROLLBACK TRANSACTION&quot;;
+<i>95</i>&nbsp;
+<b class="nc"><i>96</i>&nbsp;    private DBManager() {</b>
+<i>97</i>&nbsp;        // Nothing
+<b class="nc"><i>98</i>&nbsp;    }</b>
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    /*
+<i>102</i>&nbsp;     * Adds event to the database, it does not add the attending relationships
+<i>103</i>&nbsp;     * in events.attending to the database.
+<i>104</i>&nbsp;     *
+<i>105</i>&nbsp;     * @requires event must not already be in the database.
+<i>106</i>&nbsp;     *
+<i>107</i>&nbsp;     * @param event event to be added to the database.
+<i>108</i>&nbsp;     *
+<i>109</i>&nbsp;     */
+<i>110</i>&nbsp;    public static void addEvent(Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>111</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>112</i>&nbsp;        addEvent(conn, event);</b>
+<b class="fc"><i>113</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>114</i>&nbsp;    }</b>
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;    /*
+<i>118</i>&nbsp;     * Adds event to the database, it also add the attending relationships
+<i>119</i>&nbsp;     * in events.attending to the database.
+<i>120</i>&nbsp;     *
+<i>121</i>&nbsp;     * @requires event must not already be in the database.
+<i>122</i>&nbsp;     * @requires attending relationships in events.attending must not be in the database.
+<i>123</i>&nbsp;     *
+<i>124</i>&nbsp;     * @param event event to be added to the database.
+<i>125</i>&nbsp;     *
+<i>126</i>&nbsp;     */
+<i>127</i>&nbsp;    public static void addEventWithAttendance(Event event) throws SQLException, ClassNotFoundException {
+<b class="nc"><i>128</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="nc"><i>129</i>&nbsp;        addEvent(conn, event);</b>
+<b class="nc"><i>130</i>&nbsp;        for (Account account: event.attending) {</b>
+<b class="nc"><i>131</i>&nbsp;            addAccountToEvent(conn, account, event);</b>
+<b class="nc"><i>132</i>&nbsp;        }</b>
+<b class="nc"><i>133</i>&nbsp;        closeConnection(conn);</b>
+<b class="nc"><i>134</i>&nbsp;    }</b>
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;    /*
+<i>137</i>&nbsp;     * Performs the actual query eperation for the public funtion of the same name. It is built
+<i>138</i>&nbsp;     * without openning and closing connection so that it can be reused in other methods.
+<i>139</i>&nbsp;     *
+<i>140</i>&nbsp;     */
+<i>141</i>&nbsp;    private static void addEvent(Connection conn, Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>142</i>&nbsp;        PreparedStatement addEventStatement = conn.prepareStatement(ADD_EVENT_SQL);</b>
+<b class="fc"><i>143</i>&nbsp;        addEventStatement.clearParameters();</b>
+<b class="fc"><i>144</i>&nbsp;        addEventStatement.setInt(1, event.eid);</b>
+<b class="fc"><i>145</i>&nbsp;        addEventStatement.setString(2, event.title);</b>
+<b class="fc"><i>146</i>&nbsp;        addEventStatement.setDouble(3, event.location.getLongitude());</b>
+<b class="fc"><i>147</i>&nbsp;        addEventStatement.setDouble(4, event.location.getLatitude());</b>
+<b class="fc"><i>148</i>&nbsp;        addEventStatement.setLong(5, event.time.getTime());</b>
+<b class="fc"><i>149</i>&nbsp;        addEventStatement.setInt(6, event.duration);</b>
+<b class="fc"><i>150</i>&nbsp;        addEventStatement.setLong(7, event.timeCreated.getTime());</b>
+<b class="fc"><i>151</i>&nbsp;        addEventStatement.setString(8, event.description);</b>
+<b class="fc"><i>152</i>&nbsp;        addEventStatement.executeUpdate();</b>
+<b class="fc"><i>153</i>&nbsp;    }</b>
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;    /*
+<i>156</i>&nbsp;     * Returns an Event object, whose eid is parameter eid. It does not populate the
+<i>157</i>&nbsp;     * attending field of event with the attending relationships in database.
+<i>158</i>&nbsp;     * Returns null in the case the event does not exist in the database.
+<i>159</i>&nbsp;     *
+<i>160</i>&nbsp;     * @param eid the eid of the event to be retrieved.
+<i>161</i>&nbsp;     *
+<i>162</i>&nbsp;     */
+<i>163</i>&nbsp;    public static Event getEventById(int eid) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>164</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>165</i>&nbsp;        Event event = getEventById(conn, eid);</b>
+<b class="fc"><i>166</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>167</i>&nbsp;        return event;</b>
+<i>168</i>&nbsp;    }
+<i>169</i>&nbsp;
+<i>170</i>&nbsp;    /*
+<i>171</i>&nbsp;     * Returns an Event object, whose eid is parameter eid. It also populates the
+<i>172</i>&nbsp;     * attending field of event with the attending relationships in database.
+<i>173</i>&nbsp;     * Returns null in the case the event does not exist in the database.
+<i>174</i>&nbsp;     *
+<i>175</i>&nbsp;     * @param eid the eid of the event to be retrieved.
+<i>176</i>&nbsp;     *
+<i>177</i>&nbsp;     */
+<i>178</i>&nbsp;    public static Event getEventByIdWithAttendance(int eid) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>179</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>180</i>&nbsp;        Event event = getEventById(conn, eid);</b>
+<b class="fc"><i>181</i>&nbsp;        if (event == null) {</b>
+<b class="nc"><i>182</i>&nbsp;            return null;</b>
+<i>183</i>&nbsp;        }
+<b class="fc"><i>184</i>&nbsp;        event.attending = getAccountsAttendingEvent(conn, event);</b>
+<b class="fc"><i>185</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>186</i>&nbsp;        return event;</b>
+<i>187</i>&nbsp;    }
+<i>188</i>&nbsp;
+<i>189</i>&nbsp;
+<i>190</i>&nbsp;    /*
+<i>191</i>&nbsp;     * Performs the actual query eperation for the public funtion of the same name. It is built
+<i>192</i>&nbsp;     * without openning and closing connection so that it can be reused in other methods.
+<i>193</i>&nbsp;     *
+<i>194</i>&nbsp;     */
+<i>195</i>&nbsp;    private static Event getEventById(Connection conn, int eid) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>196</i>&nbsp;        PreparedStatement getEventByIdStatement = conn.prepareStatement(GET_EVENT_BY_ID_SQL);</b>
+<b class="fc"><i>197</i>&nbsp;        getEventByIdStatement.clearParameters();</b>
+<b class="fc"><i>198</i>&nbsp;        getEventByIdStatement.setInt(1, eid);</b>
+<b class="fc"><i>199</i>&nbsp;        ResultSet rs = getEventByIdStatement.executeQuery();</b>
+<b class="fc"><i>200</i>&nbsp;        if (rs.next()) {</b>
+<b class="fc"><i>201</i>&nbsp;            String title = rs.getString(&quot;title&quot;);</b>
+<b class="fc"><i>202</i>&nbsp;            Location loc = new Location(&quot;new location&quot;);</b>
+<b class="fc"><i>203</i>&nbsp;            loc.setLongitude(rs.getDouble(&quot;longitude&quot;));</b>
+<b class="fc"><i>204</i>&nbsp;            loc.setLatitude(rs.getDouble(&quot;latitude&quot;));</b>
+<b class="fc"><i>205</i>&nbsp;            Date time = new java.util.Date(rs.getLong(&quot;start_time&quot;));</b>
+<b class="fc"><i>206</i>&nbsp;            int duration = rs.getInt(&quot;duration&quot;);</b>
+<b class="fc"><i>207</i>&nbsp;            Date timeCreated = new java.util.Date(rs.getLong(&quot;time_created&quot;));</b>
+<b class="fc"><i>208</i>&nbsp;            String description = rs.getString(&quot;description&quot;);</b>
+<b class="fc"><i>209</i>&nbsp;            return new Event(eid, title, loc, time, duration, timeCreated, description);</b>
+<i>210</i>&nbsp;        }
+<b class="fc"><i>211</i>&nbsp;        return null;</b>
+<i>212</i>&nbsp;    }
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;    /*
+<i>215</i>&nbsp;     * Removes Event event from the database. Does not remove the attending relations in
+<i>216</i>&nbsp;     * event.
+<i>217</i>&nbsp;     *
+<i>218</i>&nbsp;     * @param event event to be removed.
+<i>219</i>&nbsp;     *
+<i>220</i>&nbsp;     */
+<i>221</i>&nbsp;    public static void removeEvent(Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>222</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>223</i>&nbsp;        removeEvent(conn, event);</b>
+<b class="fc"><i>224</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>225</i>&nbsp;    }</b>
+<i>226</i>&nbsp;
+<i>227</i>&nbsp;    /*
+<i>228</i>&nbsp;     * Performs the actual query eperation for the public funtion of the same name. It is built
+<i>229</i>&nbsp;     * without openning and closing connection so that it can be reused in other methods.
+<i>230</i>&nbsp;     *
+<i>231</i>&nbsp;     */
+<i>232</i>&nbsp;    private static void removeEvent(Connection conn, Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>233</i>&nbsp;        PreparedStatement getEventByIdStatement = conn.prepareStatement(REMOVE_EVENT_SQL);</b>
+<b class="fc"><i>234</i>&nbsp;        getEventByIdStatement.clearParameters();</b>
+<b class="fc"><i>235</i>&nbsp;        getEventByIdStatement.setInt(1, event.eid);</b>
+<b class="fc"><i>236</i>&nbsp;        getEventByIdStatement.executeUpdate();</b>
+<b class="fc"><i>237</i>&nbsp;    }</b>
+<i>238</i>&nbsp;
+<i>239</i>&nbsp;
+<i>240</i>&nbsp;    /*
+<i>241</i>&nbsp;     * removes Account account from database. Does not remove attending relations in account.
+<i>242</i>&nbsp;     *
+<i>243</i>&nbsp;     * @param account account to be removed.
+<i>244</i>&nbsp;     *
+<i>245</i>&nbsp;     */
+<i>246</i>&nbsp;    public static void removeAccount(Account account) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>247</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>248</i>&nbsp;        removeAccount(conn, account);</b>
+<b class="fc"><i>249</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>250</i>&nbsp;    }</b>
+<i>251</i>&nbsp;
+<i>252</i>&nbsp;    private static void removeAccount(Connection conn, Account account) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>253</i>&nbsp;        PreparedStatement getEventByIdStatement = conn.prepareStatement(REMOVE_ACCOUNT_SQL);</b>
+<b class="fc"><i>254</i>&nbsp;        getEventByIdStatement.clearParameters();</b>
+<b class="fc"><i>255</i>&nbsp;        getEventByIdStatement.setInt(1, account.getUid());</b>
+<b class="fc"><i>256</i>&nbsp;        getEventByIdStatement.executeUpdate();</b>
+<b class="fc"><i>257</i>&nbsp;    }</b>
+<i>258</i>&nbsp;
+<i>259</i>&nbsp;    /*
+<i>260</i>&nbsp;     * Removes attendance relationship between Account account and Event event.
+<i>261</i>&nbsp;     *
+<i>262</i>&nbsp;     */
+<i>263</i>&nbsp;    public static void removeAttendance(Account account, Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>264</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>265</i>&nbsp;        removeAttendance(conn, account, event);</b>
+<b class="fc"><i>266</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>267</i>&nbsp;    }</b>
+<i>268</i>&nbsp;
+<i>269</i>&nbsp;    /*
+<i>270</i>&nbsp;     * Performs the actual query eperation for the public funtion of the same name. It is built
+<i>271</i>&nbsp;     * without openning and closing connection so that it can be reused in other methods.
+<i>272</i>&nbsp;     *
+<i>273</i>&nbsp;     */
+<i>274</i>&nbsp;    private static void removeAttendance(Connection conn, Account account, Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>275</i>&nbsp;        PreparedStatement getEventByIdStatement = conn.prepareStatement(REMOVE_ATTENDANCE_SQL);</b>
+<b class="fc"><i>276</i>&nbsp;        getEventByIdStatement.clearParameters();</b>
+<b class="fc"><i>277</i>&nbsp;        getEventByIdStatement.setInt(1, account.getUid());</b>
+<b class="fc"><i>278</i>&nbsp;        getEventByIdStatement.setInt(2, event.eid);</b>
+<b class="fc"><i>279</i>&nbsp;        getEventByIdStatement.executeUpdate();</b>
+<b class="fc"><i>280</i>&nbsp;    }</b>
+<i>281</i>&nbsp;
+<i>282</i>&nbsp;    /*
+<i>283</i>&nbsp;     * Removes all attendance relationships in which Event event is contained.
+<i>284</i>&nbsp;     *
+<i>285</i>&nbsp;     */
+<i>286</i>&nbsp;    public static void removeEventAttendance(Event event) throws SQLException, ClassNotFoundException {
+<b class="nc"><i>287</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="nc"><i>288</i>&nbsp;        removeEventAttendance(conn, event);</b>
+<b class="nc"><i>289</i>&nbsp;        closeConnection(conn);</b>
+<b class="nc"><i>290</i>&nbsp;    }</b>
+<i>291</i>&nbsp;
+<i>292</i>&nbsp;    /*
+<i>293</i>&nbsp;     * Performs the actual query eperation for the public funtion of the same name. It is built
+<i>294</i>&nbsp;     * without openning and closing connection so that it can be reused in other methods.
+<i>295</i>&nbsp;     *
+<i>296</i>&nbsp;     */
+<i>297</i>&nbsp;    private static void removeEventAttendance(Connection conn, Event event) throws SQLException, ClassNotFoundException {
+<b class="nc"><i>298</i>&nbsp;        PreparedStatement getEventByIdStatement = conn.prepareStatement(REMOVE_EVENT_ATTENDANCE_SQL);</b>
+<b class="nc"><i>299</i>&nbsp;        getEventByIdStatement.clearParameters();</b>
+<b class="nc"><i>300</i>&nbsp;        getEventByIdStatement.setInt(1, event.eid);</b>
+<b class="nc"><i>301</i>&nbsp;        getEventByIdStatement.executeUpdate();</b>
+<b class="nc"><i>302</i>&nbsp;    }</b>
+<i>303</i>&nbsp;
+<i>304</i>&nbsp;    /*
+<i>305</i>&nbsp;     * Removes all attendance relationships in which Account account is contained.
+<i>306</i>&nbsp;     *
+<i>307</i>&nbsp;     */
+<i>308</i>&nbsp;    public static void removeAccountAttendance(Account account) throws SQLException, ClassNotFoundException {
+<b class="nc"><i>309</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="nc"><i>310</i>&nbsp;        removeAccountAttendance(conn, account);</b>
+<b class="nc"><i>311</i>&nbsp;        closeConnection(conn);</b>
+<b class="nc"><i>312</i>&nbsp;    }</b>
+<i>313</i>&nbsp;
+<i>314</i>&nbsp;    /*
+<i>315</i>&nbsp;     * Performs the actual query operation for the public funtion of the same name. It is built
+<i>316</i>&nbsp;     * without opening and closing connection so that it can be reused in other methods.
+<i>317</i>&nbsp;     *
+<i>318</i>&nbsp;     */
+<i>319</i>&nbsp;    private static void removeAccountAttendance(Connection conn, Account account) throws SQLException, ClassNotFoundException {
+<b class="nc"><i>320</i>&nbsp;        PreparedStatement getEventByIdStatement = conn.prepareStatement(REMOVE_ACCOUNT_ATTENDANCE_SQL);</b>
+<b class="nc"><i>321</i>&nbsp;        getEventByIdStatement.clearParameters();</b>
+<b class="nc"><i>322</i>&nbsp;        getEventByIdStatement.setInt(1, account.getUid());</b>
+<b class="nc"><i>323</i>&nbsp;        getEventByIdStatement.executeUpdate();</b>
+<b class="nc"><i>324</i>&nbsp;    }</b>
+<i>325</i>&nbsp;
+<i>326</i>&nbsp;    /*
+<i>327</i>&nbsp;     * Returns the Account object account, whose uid is parameter uid.
+<i>328</i>&nbsp;     * Returns null in the case the account does not exist in the database.
+<i>329</i>&nbsp;     * Does it not return the list of events the account is attending.
+<i>330</i>&nbsp;     *
+<i>331</i>&nbsp;     * @param uid the uid of the account to be retrieved.
+<i>332</i>&nbsp;     *
+<i>333</i>&nbsp;     */
+<i>334</i>&nbsp;    public static Account getAccountById(int uid) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>335</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>336</i>&nbsp;        Account account = getAccountById(conn, uid);</b>
+<b class="fc"><i>337</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>338</i>&nbsp;        return account;</b>
+<i>339</i>&nbsp;    }
+<i>340</i>&nbsp;
+<i>341</i>&nbsp;    /*
+<i>342</i>&nbsp;     * Performs the actual query operation for the public funtion of the same name. It is built
+<i>343</i>&nbsp;     * without opening and closing connection so that it can be reused in other methods.
+<i>344</i>&nbsp;     *
+<i>345</i>&nbsp;     */
+<i>346</i>&nbsp;    private static Account getAccountById(Connection conn, int uid) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>347</i>&nbsp;        PreparedStatement getAccountByIdStatement = conn.prepareStatement(GET_ACCOUNT_BY_ID_SQL);</b>
+<b class="fc"><i>348</i>&nbsp;        getAccountByIdStatement.clearParameters();</b>
+<b class="fc"><i>349</i>&nbsp;        getAccountByIdStatement.setInt(1, uid);</b>
+<b class="fc"><i>350</i>&nbsp;        ResultSet rs = getAccountByIdStatement.executeQuery();</b>
+<b class="fc"><i>351</i>&nbsp;        if (rs.next()) {</b>
+<b class="fc"><i>352</i>&nbsp;            String name = rs.getString(&quot;name&quot;);</b>
+<b class="fc"><i>353</i>&nbsp;            return new Account(uid, name);</b>
+<i>354</i>&nbsp;        }
+<b class="fc"><i>355</i>&nbsp;        return null;</b>
+<i>356</i>&nbsp;    }
+<i>357</i>&nbsp;
+<i>358</i>&nbsp;    /*
+<i>359</i>&nbsp;     * Gets a list of events within the square whose center lies at location, and whose height is radius.
+<i>360</i>&nbsp;     * Does not return events with the attending field populated.
+<i>361</i>&nbsp;     *
+<i>362</i>&nbsp;     */
+<i>363</i>&nbsp;    public static List&lt;Event&gt; getEventsInRadius(Location location, double radius) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>364</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>365</i>&nbsp;        List&lt;Event&gt; list = getEventsInRadius(conn, location, radius);</b>
+<b class="fc"><i>366</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>367</i>&nbsp;        return list;</b>
+<i>368</i>&nbsp;    }
+<i>369</i>&nbsp;
+<i>370</i>&nbsp;    /*
+<i>371</i>&nbsp;    * Gets a list of events within the square whose center lies at location, and whose height is radius.
+<i>372</i>&nbsp;    * Does not return events with the attending field populated.
+<i>373</i>&nbsp;    *
+<i>374</i>&nbsp;    */
+<i>375</i>&nbsp;    public static List&lt;Event&gt; getEventsInRadiusWithAttendance(Location location, double radius) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>376</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>377</i>&nbsp;        List&lt;Event&gt; list = getEventsInRadius(conn, location, radius);</b>
+<b class="fc"><i>378</i>&nbsp;        for (Event e : list) {</b>
+<b class="fc"><i>379</i>&nbsp;            e.attending = getAccountsAttendingEvent(conn, e);</b>
+<b class="fc"><i>380</i>&nbsp;        }</b>
+<b class="fc"><i>381</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>382</i>&nbsp;        return list;</b>
+<i>383</i>&nbsp;    }
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;    /*
+<i>386</i>&nbsp;     * Performs the actual query operation for the public funtion of the same name. It is built
+<i>387</i>&nbsp;     * without opening and closing connection so that it can be reused in other methods.
+<i>388</i>&nbsp;     *
+<i>389</i>&nbsp;     */
+<i>390</i>&nbsp;    private static List&lt;Event&gt; getEventsInRadius(Connection conn, Location location, double radius) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>391</i>&nbsp;        PreparedStatement getEventByRadiusStatement = conn.prepareStatement(GET_EVENTS_IN_RADIUS_SQL);</b>
+<b class="fc"><i>392</i>&nbsp;        getEventByRadiusStatement.clearParameters();</b>
+<b class="fc"><i>393</i>&nbsp;        getEventByRadiusStatement.setDouble(1, location.getLatitude() + radius);</b>
+<b class="fc"><i>394</i>&nbsp;        getEventByRadiusStatement.setDouble(2, location.getLatitude() - radius);</b>
+<b class="fc"><i>395</i>&nbsp;        getEventByRadiusStatement.setDouble(3, location.getLongitude() + radius);</b>
+<b class="fc"><i>396</i>&nbsp;        getEventByRadiusStatement.setDouble(4, location.getLongitude() - radius);</b>
+<b class="fc"><i>397</i>&nbsp;        ResultSet rs = getEventByRadiusStatement.executeQuery();</b>
+<b class="fc"><i>398</i>&nbsp;        List&lt;Event&gt; list = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>399</i>&nbsp;        while (rs.next()) {</b>
+<b class="fc"><i>400</i>&nbsp;            int eid = rs.getInt(&quot;eid&quot;);</b>
+<b class="fc"><i>401</i>&nbsp;            String title = rs.getString(&quot;title&quot;);</b>
+<b class="fc"><i>402</i>&nbsp;            Location loc = new Location(&quot;new location&quot;);</b>
+<b class="fc"><i>403</i>&nbsp;            loc.setLongitude(rs.getDouble(&quot;longitude&quot;));</b>
+<b class="fc"><i>404</i>&nbsp;            loc.setLatitude(rs.getDouble(&quot;latitude&quot;));</b>
+<b class="fc"><i>405</i>&nbsp;            Date time = new java.util.Date(rs.getLong(&quot;start_time&quot;));</b>
+<b class="fc"><i>406</i>&nbsp;            int duration = rs.getInt(&quot;duration&quot;);</b>
+<b class="fc"><i>407</i>&nbsp;            Date timeCreated = new java.util.Date(rs.getLong(&quot;time_created&quot;));</b>
+<b class="fc"><i>408</i>&nbsp;            String description = rs.getString(&quot;description&quot;);</b>
+<b class="fc"><i>409</i>&nbsp;            Event event = new Event(eid, title, loc, time, duration, timeCreated, description);</b>
+<b class="fc"><i>410</i>&nbsp;            list.add(event);</b>
+<b class="fc"><i>411</i>&nbsp;        }</b>
+<b class="fc"><i>412</i>&nbsp;        return list;</b>
+<i>413</i>&nbsp;    }
+<i>414</i>&nbsp;
+<i>415</i>&nbsp;    /*
+<i>416</i>&nbsp;     * Adds an attending relationship between account and event.
+<i>417</i>&nbsp;     *
+<i>418</i>&nbsp;     */
+<i>419</i>&nbsp;    public static void addAccountToEvent(Account account, Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>420</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>421</i>&nbsp;        addAccountToEvent(conn, account, event);</b>
+<b class="fc"><i>422</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>423</i>&nbsp;    }</b>
+<i>424</i>&nbsp;
+<i>425</i>&nbsp;    /*
+<i>426</i>&nbsp;     * Performs the actual query operation for the public funtion of the same name. It is built
+<i>427</i>&nbsp;     * without opening and closing connection so that it can be reused in other methods.
+<i>428</i>&nbsp;     *
+<i>429</i>&nbsp;     */
+<i>430</i>&nbsp;    private static void addAccountToEvent(Connection conn, Account account, Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>431</i>&nbsp;        PreparedStatement st = conn.prepareStatement(ADD_ACCOUNT_TO_EVENT_SQL);</b>
+<b class="fc"><i>432</i>&nbsp;        st.clearParameters();</b>
+<b class="fc"><i>433</i>&nbsp;        st.setInt(1, account.getUid());</b>
+<b class="fc"><i>434</i>&nbsp;        st.setInt(2, event.eid);</b>
+<b class="fc"><i>435</i>&nbsp;        st.executeUpdate();</b>
+<b class="fc"><i>436</i>&nbsp;    }</b>
+<i>437</i>&nbsp;
+<i>438</i>&nbsp;    /*
+<i>439</i>&nbsp;     * adds account to the database. Does not add any attending relationships to the database.
+<i>440</i>&nbsp;     *
+<i>441</i>&nbsp;     * @requires account must not be already in the database.
+<i>442</i>&nbsp;     *
+<i>443</i>&nbsp;     */
+<i>444</i>&nbsp;    public static void addAccount(Account account) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>445</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>446</i>&nbsp;        addAccount(conn, account);</b>
+<b class="fc"><i>447</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>448</i>&nbsp;    }</b>
+<i>449</i>&nbsp;
+<i>450</i>&nbsp;    /*
+<i>451</i>&nbsp;     * Performs the actual query operation for the public funtion of the same name. It is built
+<i>452</i>&nbsp;     * without opening and closing connection so that it can be reused in other methods.
+<i>453</i>&nbsp;     *
+<i>454</i>&nbsp;     */
+<i>455</i>&nbsp;    private static void addAccount(Connection conn, Account account) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>456</i>&nbsp;        PreparedStatement createAccountStatement = conn.prepareStatement(CREATE_ACCOUNT_SQL);</b>
+<b class="fc"><i>457</i>&nbsp;        createAccountStatement.clearParameters();</b>
+<b class="fc"><i>458</i>&nbsp;        createAccountStatement.setInt(1, account.getUid());</b>
+<b class="fc"><i>459</i>&nbsp;        createAccountStatement.setString(2, account.getName());</b>
+<b class="fc"><i>460</i>&nbsp;        createAccountStatement.executeUpdate();</b>
+<b class="fc"><i>461</i>&nbsp;    }</b>
+<i>462</i>&nbsp;
+<i>463</i>&nbsp;    /*
+<i>464</i>&nbsp;     * Gets the list of events attended by account.
+<i>465</i>&nbsp;     *
+<i>466</i>&nbsp;     * @requires account be in the database.
+<i>467</i>&nbsp;     *
+<i>468</i>&nbsp;     */
+<i>469</i>&nbsp;    public static List&lt;Event&gt; getEventsAttendedByAccount(Account account) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>470</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>471</i>&nbsp;        List&lt;Event&gt; list = getEventsAttendedByAccount(conn, account);</b>
+<b class="fc"><i>472</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>473</i>&nbsp;        return list;</b>
+<i>474</i>&nbsp;    }
+<i>475</i>&nbsp;
+<i>476</i>&nbsp;    /*
+<i>477</i>&nbsp;     * Performs the actual query operation for the public funtion of the same name. It is built
+<i>478</i>&nbsp;     * without opening and closing connection so that it can be reused in other methods.
+<i>479</i>&nbsp;     *
+<i>480</i>&nbsp;     */
+<i>481</i>&nbsp;    private static List&lt;Event&gt; getEventsAttendedByAccount(Connection conn, Account account) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>482</i>&nbsp;        PreparedStatement getUserEventStatement = conn.prepareStatement(GET_EVENTS_ATTENDED_BY_ACCOUNT_SQL);</b>
+<b class="fc"><i>483</i>&nbsp;        List&lt;Event&gt; list = new ArrayList&lt;Event&gt;();</b>
+<b class="fc"><i>484</i>&nbsp;        getUserEventStatement.clearParameters();</b>
+<b class="fc"><i>485</i>&nbsp;        getUserEventStatement.setInt(1, account.getUid());</b>
+<b class="fc"><i>486</i>&nbsp;        ResultSet rs = getUserEventStatement.executeQuery();</b>
+<b class="fc"><i>487</i>&nbsp;        while (rs.next()) {</b>
+<b class="fc"><i>488</i>&nbsp;            int eid = rs.getInt(&quot;eid&quot;);</b>
+<b class="fc"><i>489</i>&nbsp;            String title = rs.getString(&quot;title&quot;);</b>
+<b class="fc"><i>490</i>&nbsp;            Location loc = new Location(&quot;new location&quot;);</b>
+<b class="fc"><i>491</i>&nbsp;            loc.setLongitude(rs.getDouble(&quot;longitude&quot;));</b>
+<b class="fc"><i>492</i>&nbsp;            loc.setLatitude(rs.getDouble(&quot;latitude&quot;));</b>
+<b class="fc"><i>493</i>&nbsp;            Date time = new java.util.Date(rs.getLong(&quot;start_time&quot;));</b>
+<b class="fc"><i>494</i>&nbsp;            int duration = rs.getInt(&quot;duration&quot;);</b>
+<b class="fc"><i>495</i>&nbsp;            Date timeCreated = new java.util.Date(rs.getLong(&quot;time_created&quot;));</b>
+<b class="fc"><i>496</i>&nbsp;            String description = rs.getString(&quot;description&quot;);</b>
+<b class="fc"><i>497</i>&nbsp;            Event event = new Event(eid, title, loc, time, duration, timeCreated, description);</b>
+<b class="fc"><i>498</i>&nbsp;            list.add(event);</b>
+<b class="fc"><i>499</i>&nbsp;        }</b>
+<b class="fc"><i>500</i>&nbsp;        return list;</b>
+<i>501</i>&nbsp;    }
+<i>502</i>&nbsp;
+<i>503</i>&nbsp;    /*
+<i>504</i>&nbsp;     * gets the count of accounts attending event.
+<i>505</i>&nbsp;     *
+<i>506</i>&nbsp;     */
+<i>507</i>&nbsp;    public static int getCountOfAccountsAttendingEvent(Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>508</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>509</i>&nbsp;        PreparedStatement st = conn.prepareStatement(GET_COUNT_OF_ACCOUNTS_ATTENDING_EVENT_SQL);</b>
+<b class="fc"><i>510</i>&nbsp;        int count = 0;</b>
+<b class="fc"><i>511</i>&nbsp;        st.clearParameters();</b>
+<b class="fc"><i>512</i>&nbsp;        st.setInt(1, event.eid);</b>
+<b class="fc"><i>513</i>&nbsp;        ResultSet rs = st.executeQuery();</b>
+<b class="fc"><i>514</i>&nbsp;        if (rs.next()) {</b>
+<b class="fc"><i>515</i>&nbsp;            count = rs.getInt(1);</b>
+<i>516</i>&nbsp;        }
+<b class="fc"><i>517</i>&nbsp;        return count;</b>
+<i>518</i>&nbsp;    }
+<i>519</i>&nbsp;
+<i>520</i>&nbsp;    /*
+<i>521</i>&nbsp;     * gets a list of accounts attending event.
+<i>522</i>&nbsp;     *
+<i>523</i>&nbsp;     */
+<i>524</i>&nbsp;    public static List&lt;Account&gt; getAccountsAttendingEvent(Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>525</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>526</i>&nbsp;        List&lt;Account&gt; list = getAccountsAttendingEvent(conn, event);</b>
+<b class="fc"><i>527</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>528</i>&nbsp;        return list;</b>
+<i>529</i>&nbsp;    }
+<i>530</i>&nbsp;
+<i>531</i>&nbsp;    /*
+<i>532</i>&nbsp;     * Performs the actual query operation for the public funtion of the same name. It is built
+<i>533</i>&nbsp;     * without opening and closing connection so that it can be reused in other methods.
+<i>534</i>&nbsp;     *
+<i>535</i>&nbsp;     */
+<i>536</i>&nbsp;    private static List&lt;Account&gt; getAccountsAttendingEvent(Connection conn, Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>537</i>&nbsp;        PreparedStatement st = conn.prepareStatement(GET_ACCOUNTS_ATTENDING_EVENT_SQL);</b>
+<b class="fc"><i>538</i>&nbsp;        List&lt;Account&gt; list = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>539</i>&nbsp;        st.clearParameters();</b>
+<b class="fc"><i>540</i>&nbsp;        st.setInt(1, event.eid);</b>
+<b class="fc"><i>541</i>&nbsp;        ResultSet rs = st.executeQuery();</b>
+<b class="fc"><i>542</i>&nbsp;        while (rs.next()) {</b>
+<b class="fc"><i>543</i>&nbsp;            int uid = rs.getInt(&quot;uid&quot;);</b>
+<b class="fc"><i>544</i>&nbsp;            String name = rs.getString(&quot;name&quot;);</b>
+<b class="fc"><i>545</i>&nbsp;            Account account = new Account(uid, name);</b>
+<b class="fc"><i>546</i>&nbsp;            list.add(account);</b>
+<b class="fc"><i>547</i>&nbsp;        }</b>
+<b class="fc"><i>548</i>&nbsp;        return list;</b>
+<i>549</i>&nbsp;    }
+<i>550</i>&nbsp;
+<i>551</i>&nbsp;    /*
+<i>552</i>&nbsp;     * returns true if there is an attendance relationship between event and account in the database.
+<i>553</i>&nbsp;     * returns false otherwise. This method is merely for the purpose of testing.
+<i>554</i>&nbsp;     *
+<i>555</i>&nbsp;     */
+<i>556</i>&nbsp;    public static boolean checkAttendance(Account account, Event event) throws SQLException, ClassNotFoundException {
+<b class="fc"><i>557</i>&nbsp;        Connection conn = openConnection();</b>
+<b class="fc"><i>558</i>&nbsp;        PreparedStatement statement = conn.prepareStatement(CHECK_ATTENDANCE_SQL);</b>
+<b class="fc"><i>559</i>&nbsp;        statement.clearParameters();</b>
+<b class="fc"><i>560</i>&nbsp;        statement.setInt(1, account.getUid());</b>
+<b class="fc"><i>561</i>&nbsp;        statement.setInt(2, event.eid);</b>
+<b class="fc"><i>562</i>&nbsp;        ResultSet rs = statement.executeQuery();</b>
+<b class="fc"><i>563</i>&nbsp;        closeConnection(conn);</b>
+<b class="fc"><i>564</i>&nbsp;        if (rs.next()) {</b>
+<b class="fc"><i>565</i>&nbsp;            int uid = rs.getInt(&quot;uid&quot;);</b>
+<b class="fc"><i>566</i>&nbsp;            int eid = rs.getInt(&quot;eid&quot;);</b>
+<b class="fc"><i>567</i>&nbsp;            if (uid == account.getUid() &amp;&amp; eid == event.eid) {</b>
+<b class="fc"><i>568</i>&nbsp;                return true;</b>
+<i>569</i>&nbsp;            }
+<i>570</i>&nbsp;        }
+<b class="fc"><i>571</i>&nbsp;        return false;</b>
+<i>572</i>&nbsp;    }
+<i>573</i>&nbsp;
+<i>574</i>&nbsp;    /* Connection code to MySQL.  */
+<i>575</i>&nbsp;    private static Connection openConnection() throws ClassNotFoundException, SQLException {
+<b class="fc"><i>576</i>&nbsp;        Class.forName(JDBC_DRIVER);</b>
+<b class="fc"><i>577</i>&nbsp;        return DriverManager.getConnection(DB_URL, USER, PASS);</b>
+<i>578</i>&nbsp;    }
+<i>579</i>&nbsp;
+<i>580</i>&nbsp;    private static void closeConnection(Connection conn) throws SQLException {
+<b class="fc"><i>581</i>&nbsp;        conn.close();</b>
+<b class="fc"><i>582</i>&nbsp;    }</b>
+<i>583</i>&nbsp;
+<i>584</i>&nbsp;    private void beginTransaction(Connection conn) throws Exception {
+<b class="nc"><i>585</i>&nbsp;        conn.setAutoCommit(false);</b>
+<b class="nc"><i>586</i>&nbsp;        PreparedStatement beginTransactionStatement = conn.prepareStatement(BEGIN_TRANSACTION_SQL);</b>
+<b class="nc"><i>587</i>&nbsp;        beginTransactionStatement.executeUpdate();</b>
+<b class="nc"><i>588</i>&nbsp;    }</b>
+<i>589</i>&nbsp;
+<i>590</i>&nbsp;    private void commitTransaction(Connection conn) throws Exception {
+<b class="nc"><i>591</i>&nbsp;        PreparedStatement commitTransactionStatement = conn.prepareStatement(COMMIT_SQL);</b>
+<b class="nc"><i>592</i>&nbsp;        commitTransactionStatement.executeUpdate();</b>
+<b class="nc"><i>593</i>&nbsp;        conn.setAutoCommit(true);</b>
+<b class="nc"><i>594</i>&nbsp;    }</b>
+<i>595</i>&nbsp;
+<i>596</i>&nbsp;    private void rollbackTransaction(Connection conn) throws Exception {
+<b class="nc"><i>597</i>&nbsp;        PreparedStatement rollbackTransactionStatement = conn.prepareStatement(ROLLBACK_SQL);</b>
+<b class="nc"><i>598</i>&nbsp;        rollbackTransactionStatement.executeUpdate();</b>
+<b class="nc"><i>599</i>&nbsp;        conn.setAutoCommit(true);</b>
+<b class="nc"><i>600</i>&nbsp;    }</b>
+<i>601</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-02-26 21:49</div>
+</div>
+</body>
+</html>

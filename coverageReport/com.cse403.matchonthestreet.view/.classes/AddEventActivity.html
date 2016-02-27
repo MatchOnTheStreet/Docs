@@ -1,0 +1,402 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AddEventActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.cse403.matchonthestreet.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AddEventActivity (com.cse403.matchonthestreet.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AddEventActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 59)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AddEventActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AddEventActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AddEventActivity$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AddEventActivity$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 81)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.cse403.matchonthestreet.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.DatePickerDialog;
+<i>4</i>&nbsp;import android.app.TimePickerDialog;
+<i>5</i>&nbsp;import android.content.Context;
+<i>6</i>&nbsp;import android.content.Intent;
+<i>7</i>&nbsp;import android.location.Location;
+<i>8</i>&nbsp;import android.os.AsyncTask;
+<i>9</i>&nbsp;import android.os.Bundle;
+<i>10</i>&nbsp;import android.text.InputType;
+<i>11</i>&nbsp;import android.util.Log;
+<i>12</i>&nbsp;import android.view.View;
+<i>13</i>&nbsp;import android.view.View.OnClickListener;
+<i>14</i>&nbsp;import android.view.inputmethod.InputMethodManager;
+<i>15</i>&nbsp;import android.widget.DatePicker;
+<i>16</i>&nbsp;import android.widget.EditText;
+<i>17</i>&nbsp;import android.widget.NumberPicker;
+<i>18</i>&nbsp;import android.widget.SeekBar;
+<i>19</i>&nbsp;import android.widget.TimePicker;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import com.cse403.matchonthestreet.R;
+<i>22</i>&nbsp;import com.cse403.matchonthestreet.backend.DBManager;
+<i>23</i>&nbsp;import com.cse403.matchonthestreet.controller.MOTSApp;
+<i>24</i>&nbsp;import com.cse403.matchonthestreet.controller.ViewController;
+<i>25</i>&nbsp;import com.cse403.matchonthestreet.models.Account;
+<i>26</i>&nbsp;import com.cse403.matchonthestreet.models.Event;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;import java.text.ParseException;
+<i>29</i>&nbsp;import java.text.SimpleDateFormat;
+<i>30</i>&nbsp;import java.util.ArrayList;
+<i>31</i>&nbsp;import java.util.Calendar;
+<i>32</i>&nbsp;import java.util.Date;
+<i>33</i>&nbsp;import java.util.Locale;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;/**
+<i>36</i>&nbsp; * Created by larioj on 2/7/16.
+<i>37</i>&nbsp; */
+<b class="nc"><i>38</i>&nbsp;public class AddEventActivity extends NavActivity implements OnClickListener {</b>
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    private EditText fromDateET;
+<i>41</i>&nbsp;    private DatePickerDialog fromDatePD;
+<i>42</i>&nbsp;    private EditText fromTimeET;
+<i>43</i>&nbsp;    private TimePickerDialog fromTimePD;
+<i>44</i>&nbsp;    
+<i>45</i>&nbsp;    private EditText durationET;
+<i>46</i>&nbsp;    private NumberPicker durationPicker;
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    private SimpleDateFormat dateFormatter;
+<i>49</i>&nbsp;    private SimpleDateFormat timeFormatter;
+<i>50</i>&nbsp;    private Calendar calendar;
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    private SeekBar seekBar;
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    private Location location;
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    @Override
+<i>57</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>58</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>59</i>&nbsp;        setContentView(R.layout.activity_add_event);</b>
+<i>60</i>&nbsp;
+<b class="nc"><i>61</i>&nbsp;        Intent intent = getIntent();</b>
+<b class="nc"><i>62</i>&nbsp;        double lat = intent.getDoubleExtra(&quot;latitude&quot;, 0.0);</b>
+<b class="nc"><i>63</i>&nbsp;        double lon = intent.getDoubleExtra(&quot;longitude&quot;, 0.0);</b>
+<i>64</i>&nbsp;
+<b class="nc"><i>65</i>&nbsp;        location = new Location(&quot;userCreatedLocation&quot;);</b>
+<b class="nc"><i>66</i>&nbsp;        location.setLatitude(lat);</b>
+<b class="nc"><i>67</i>&nbsp;        location.setLongitude(lon);</b>
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;
+<b class="nc"><i>70</i>&nbsp;        calendar  = Calendar.getInstance();</b>
+<b class="nc"><i>71</i>&nbsp;        dateFormatter = new SimpleDateFormat(&quot;dd-MM-yy&quot;, Locale.US);</b>
+<i>72</i>&nbsp;
+<b class="nc"><i>73</i>&nbsp;        fromDateET = (EditText) findViewById(R.id.event_from_date);</b>
+<b class="nc"><i>74</i>&nbsp;        fromDateET.setInputType(InputType.TYPE_NULL);</b>
+<b class="nc"><i>75</i>&nbsp;        fromDateET.setOnClickListener(this);</b>
+<b class="nc"><i>76</i>&nbsp;        fromDatePD = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {</b>
+<i>77</i>&nbsp;            @Override
+<i>78</i>&nbsp;            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+<b class="nc"><i>79</i>&nbsp;                Calendar date = Calendar.getInstance();</b>
+<b class="nc"><i>80</i>&nbsp;                date.set(year, monthOfYear, dayOfMonth);</b>
+<b class="nc"><i>81</i>&nbsp;                fromDateET.setText(dateFormatter.format(date.getTime()));</b>
+<i>82</i>&nbsp;            }
+<i>83</i>&nbsp;        },
+<i>84</i>&nbsp;                calendar.get(Calendar.YEAR),
+<i>85</i>&nbsp;                calendar.get(Calendar.MONTH),
+<i>86</i>&nbsp;                calendar.get(Calendar.DAY_OF_MONTH));
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;
+<b class="nc"><i>89</i>&nbsp;        fromTimeET = (EditText) findViewById(R.id.event_from_time);</b>
+<b class="nc"><i>90</i>&nbsp;        fromTimeET.setInputType(InputType.TYPE_NULL);</b>
+<b class="nc"><i>91</i>&nbsp;        fromTimeET.setOnClickListener(this);</b>
+<b class="nc"><i>92</i>&nbsp;        fromTimePD = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {</b>
+<i>93</i>&nbsp;            @Override
+<i>94</i>&nbsp;            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+<i>95</i>&nbsp;                //Calendar time = Calendar.getInstance();
+<i>96</i>&nbsp;                //time.set(Calendar.HOUR_OF_DAY, hourOfDay);
+<i>97</i>&nbsp;                //time.set(Calendar.MINUTE, minute);
+<i>98</i>&nbsp;                //fromTimeET.setText(timeFormatter.format(time.getTime()));
+<b class="nc"><i>99</i>&nbsp;                String pad = &quot;&quot;;</b>
+<b class="nc"><i>100</i>&nbsp;                if (minute &lt; 10) pad = &quot;0&quot;;</b>
+<b class="nc"><i>101</i>&nbsp;                String time = hourOfDay + &quot;:&quot; + pad + minute;</b>
+<b class="nc"><i>102</i>&nbsp;                fromTimeET.setText(time);</b>
+<i>103</i>&nbsp;            }
+<i>104</i>&nbsp;        },
+<i>105</i>&nbsp;                calendar.get(Calendar.HOUR_OF_DAY),
+<i>106</i>&nbsp;                calendar.get(Calendar.MINUTE),
+<i>107</i>&nbsp;                false);
+<i>108</i>&nbsp;
+<b class="nc"><i>109</i>&nbsp;        durationET = (EditText) findViewById(R.id.durationET);</b>
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;       // durationPicker = (NumberPicker) findViewById(R.id.durationPicker);
+<b class="nc"><i>112</i>&nbsp;        final String[] timeValues = {&quot;1&quot;, &quot;1.5&quot;, &quot;2&quot;, &quot;2.5&quot;, &quot;3&quot;, &quot;3.5&quot;, &quot;4&quot;, &quot;4.5&quot;, &quot;5&quot;, &quot;5.5&quot;, &quot;6&quot;, &quot;6.5&quot;, &quot;7&quot;, &quot;7.5&quot;, &quot;8&quot;, &quot;8.5&quot;, &quot;9&quot;};</b>
+<i>113</i>&nbsp;//        durationPicker.setDisplayedValues(timeValues);
+<i>114</i>&nbsp;//        durationPicker.setMinValue(0);
+<i>115</i>&nbsp;//        durationPicker.setMaxValue(10);
+<i>116</i>&nbsp;//        durationPicker.setOnClickListener(this);
+<i>117</i>&nbsp;//        durationPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+<i>118</i>&nbsp;//            @Override
+<i>119</i>&nbsp;//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+<i>120</i>&nbsp;//                durationET.setText(timeValues[newVal]);
+<i>121</i>&nbsp;//            }
+<i>122</i>&nbsp;//        });
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;        seekBar = (SeekBar) findViewById(R.id.duration_seek_bar);</b>
+<b class="nc"><i>126</i>&nbsp;        seekBar.setMax(timeValues.length - 1);</b>
+<b class="nc"><i>127</i>&nbsp;        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {</b>
+<i>128</i>&nbsp;            @Override
+<i>129</i>&nbsp;            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+<b class="nc"><i>130</i>&nbsp;                durationET.setText(timeValues[progress]);</b>
+<i>131</i>&nbsp;            }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;            @Override
+<i>134</i>&nbsp;            public void onStartTrackingTouch(SeekBar seekBar) {
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;            }
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;            @Override
+<i>139</i>&nbsp;            public void onStopTrackingTouch(SeekBar seekBar) {
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;            }
+<i>142</i>&nbsp;        });
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;
+<i>145</i>&nbsp;    }
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;    @Override
+<i>148</i>&nbsp;    public void onClick(View v) {
+<b class="nc"><i>149</i>&nbsp;        if (v == fromDateET) {</b>
+<b class="nc"><i>150</i>&nbsp;            fromDatePD.show();</b>
+<b class="nc"><i>151</i>&nbsp;        } else if (v == fromTimeET) {</b>
+<b class="nc"><i>152</i>&nbsp;            fromTimePD.show();</b>
+<i>153</i>&nbsp;        }
+<i>154</i>&nbsp;    }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    public void createEvent(View view) {
+<b class="nc"><i>157</i>&nbsp;        Log.d(&quot;AddEventActivity&quot;, &quot;createEvent running&quot;);</b>
+<i>158</i>&nbsp;        //TODO: Check that all the fields were filled out
+<i>159</i>&nbsp;
+<b class="nc"><i>160</i>&nbsp;        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);</b>
+<b class="nc"><i>161</i>&nbsp;        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);</b>
+<i>162</i>&nbsp;
+<i>163</i>&nbsp;
+<b class="nc"><i>164</i>&nbsp;        String timerange = fromDateET.getText().toString() + &quot; &quot; + fromTimeET.getText().toString();</b>
+<i>165</i>&nbsp;
+<b class="nc"><i>166</i>&nbsp;        SimpleDateFormat format = new SimpleDateFormat(&quot;dd-MM-yy HH:mm&quot;, Locale.US);</b>
+<i>167</i>&nbsp;        Date date;
+<i>168</i>&nbsp;        try {
+<b class="nc"><i>169</i>&nbsp;            date = format.parse(timerange);</b>
+<i>170</i>&nbsp;
+<b class="nc"><i>171</i>&nbsp;        } catch (ParseException e) {</b>
+<b class="nc"><i>172</i>&nbsp;            date = new Date();</b>
+<b class="nc"><i>173</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>174</i>&nbsp;            Log.d(&quot;AddEventActivity&quot;, &quot;Date parse failed&quot;);</b>
+<b class="nc"><i>175</i>&nbsp;        }</b>
+<b class="nc"><i>176</i>&nbsp;        Log.d(&quot;AddEventActivity&quot;, &quot;Date toString is: &quot; + date.toString());</b>
+<i>177</i>&nbsp;
+<b class="nc"><i>178</i>&nbsp;        EditText titleET = (EditText)findViewById(R.id.event_title);</b>
+<i>179</i>&nbsp;
+<b class="nc"><i>180</i>&nbsp;        String title = titleET.getText().toString();</b>
+<i>181</i>&nbsp;
+<b class="nc"><i>182</i>&nbsp;        EditText eventDescET = (EditText)findViewById(R.id.event_description);</b>
+<b class="nc"><i>183</i>&nbsp;        String description = eventDescET.getText().toString();</b>
+<i>184</i>&nbsp;
+<i>185</i>&nbsp;
+<b class="nc"><i>186</i>&nbsp;        float duration = Float.parseFloat(durationET.getText().toString()) * 60;</b>
+<i>187</i>&nbsp;        // TODO: Add duration attribute
+<b class="nc"><i>188</i>&nbsp;        Event event = new Event(title, location, date, (int)duration, calendar.getTime(), description);</b>
+<i>189</i>&nbsp;
+<i>190</i>&nbsp;        // Adds this newly added event to ViewController
+<i>191</i>&nbsp;        // So that it appears in the list view as well
+<b class="nc"><i>192</i>&nbsp;        ViewController viewController = ((MOTSApp)getApplicationContext()).getViewController();</b>
+<b class="nc"><i>193</i>&nbsp;        viewController.addEventToSet(event);</b>
+<i>194</i>&nbsp;
+<b class="nc"><i>195</i>&nbsp;        Intent resultIntent = new Intent(); </b>
+<i>196</i>&nbsp;
+<b class="nc"><i>197</i>&nbsp;        Log.d(&quot;AddEventActivity&quot;, &quot;Date toString is: &quot; + event.time.getTime());</b>
+<i>198</i>&nbsp;
+<b class="nc"><i>199</i>&nbsp;        ArrayList&lt;Event&gt; list = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>200</i>&nbsp;        list.add(event);</b>
+<i>201</i>&nbsp;
+<b class="nc"><i>202</i>&nbsp;        AsyncTask&lt;Event, Event, Event&gt; task = new AsyncTask&lt;Event, Event, Event&gt;() {</b>
+<i>203</i>&nbsp;            @Override
+<i>204</i>&nbsp;            protected Event doInBackground(Event[] params) {
+<i>205</i>&nbsp;                try {
+<b class="nc"><i>206</i>&nbsp;                    Account accnt = ((MOTSApp) getApplication()).getMyAccount();</b>
+<b class="nc"><i>207</i>&nbsp;                    Event e = params[0];</b>
+<b class="nc"><i>208</i>&nbsp;                    if (e != null) {</b>
+<b class="nc"><i>209</i>&nbsp;                        DBManager.addEventWithAttendance(e);</b>
+<i>210</i>&nbsp;                    }
+<i>211</i>&nbsp;
+<b class="nc"><i>212</i>&nbsp;                    if (accnt != null) {</b>
+<b class="nc"><i>213</i>&nbsp;                        DBManager.addAccountToEvent(accnt, e);</b>
+<i>214</i>&nbsp;                    }
+<b class="nc"><i>215</i>&nbsp;                } catch (Exception e) {</b>
+<b class="nc"><i>216</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>217</i>&nbsp;                }</b>
+<b class="nc"><i>218</i>&nbsp;                return null;</b>
+<i>219</i>&nbsp;            }
+<i>220</i>&nbsp;        };
+<i>221</i>&nbsp;
+<b class="nc"><i>222</i>&nbsp;        Event[] events = new Event[1];</b>
+<b class="nc"><i>223</i>&nbsp;        events[0] = event;</b>
+<i>224</i>&nbsp;
+<b class="nc"><i>225</i>&nbsp;        task.execute(events);</b>
+<i>226</i>&nbsp;
+<i>227</i>&nbsp;
+<b class="nc"><i>228</i>&nbsp;        resultIntent.putParcelableArrayListExtra(&quot;eventList&quot;, list);</b>
+<i>229</i>&nbsp;
+<b class="nc"><i>230</i>&nbsp;        setResult(RESULT_OK, resultIntent);</b>
+<i>231</i>&nbsp;
+<b class="nc"><i>232</i>&nbsp;        finish();</b>
+<i>233</i>&nbsp;
+<i>234</i>&nbsp;    }
+<i>235</i>&nbsp;
+<i>236</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-02-26 21:49</div>
+</div>
+</body>
+</html>

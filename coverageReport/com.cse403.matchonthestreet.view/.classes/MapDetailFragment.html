@@ -1,0 +1,318 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MapDetailFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.cse403.matchonthestreet.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MapDetailFragment (com.cse403.matchonthestreet.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MapDetailFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 31)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MapDetailFragment$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MapDetailFragment$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MapDetailFragment$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 76)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.cse403.matchonthestreet.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.res.ColorStateList;
+<i>4</i>&nbsp;import android.graphics.Color;
+<i>5</i>&nbsp;import android.os.AsyncTask;
+<i>6</i>&nbsp;import android.os.Bundle;
+<i>7</i>&nbsp;import android.support.design.widget.FloatingActionButton;
+<i>8</i>&nbsp;import android.util.Log;
+<i>9</i>&nbsp;import android.view.LayoutInflater;
+<i>10</i>&nbsp;import android.view.View;
+<i>11</i>&nbsp;import android.view.ViewGroup;
+<i>12</i>&nbsp;import android.widget.TextView;
+<i>13</i>&nbsp;import android.widget.ToggleButton;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import com.cse403.matchonthestreet.R;
+<i>16</i>&nbsp;import com.cse403.matchonthestreet.backend.DBManager;
+<i>17</i>&nbsp;import com.cse403.matchonthestreet.controller.MOTSApp;
+<i>18</i>&nbsp;import com.cse403.matchonthestreet.models.Account;
+<i>19</i>&nbsp;import com.cse403.matchonthestreet.models.Event;
+<i>20</i>&nbsp;import com.google.android.gms.maps.CameraUpdateFactory;
+<i>21</i>&nbsp;import com.google.android.gms.maps.model.LatLng;
+<i>22</i>&nbsp;import com.google.android.gms.maps.model.TileOverlay;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;import org.w3c.dom.Text;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;import java.sql.SQLException;
+<i>27</i>&nbsp;import java.util.ArrayList;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;/**
+<i>30</i>&nbsp; * Created by Lance on 2/7/16.
+<i>31</i>&nbsp; *
+<i>32</i>&nbsp; * The MapDetailFragment is the small detail view that pops up from the bottom of the screen when
+<i>33</i>&nbsp; * a user taps on a marker and will display info regarding the event and will have a button so the user
+<i>34</i>&nbsp; * can attend the event.
+<i>35</i>&nbsp; */
+<b class="nc"><i>36</i>&nbsp;public class MapDetailFragment extends android.support.v4.app.Fragment {</b>
+<i>37</i>&nbsp;    // Tag for logging purposes
+<b class="nc"><i>38</i>&nbsp;    private String TAG = &quot;MapDetailFrag&quot;;</b>
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @Override
+<i>42</i>&nbsp;    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+<b class="nc"><i>43</i>&nbsp;        Log.d(TAG,&quot;onCreateView&quot;);</b>
+<i>44</i>&nbsp;        /** Inflating the layout for this fragment **/
+<b class="nc"><i>45</i>&nbsp;        View mView = inflater.inflate(R.layout.map_detail_layout, null);</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;        // Update the title of the event from the passed bundle
+<b class="nc"><i>48</i>&nbsp;        TextView tv = (TextView) mView.findViewById(R.id.detail_text);</b>
+<b class="nc"><i>49</i>&nbsp;        String passedText = getArguments().getString(&quot;detailText&quot;);</b>
+<b class="nc"><i>50</i>&nbsp;        if (passedText != null) {</b>
+<b class="nc"><i>51</i>&nbsp;            tv.setText(passedText);</b>
+<i>52</i>&nbsp;        }
+<i>53</i>&nbsp;
+<b class="nc"><i>54</i>&nbsp;        String eventDate = getArguments().getString(&quot;date&quot;);</b>
+<b class="nc"><i>55</i>&nbsp;        if (eventDate != null) {</b>
+<b class="nc"><i>56</i>&nbsp;            TextView dateText = (TextView) mView.findViewById(R.id.event_date);</b>
+<i>57</i>&nbsp;
+<b class="nc"><i>58</i>&nbsp;            dateText.setText(eventDate);</b>
+<i>59</i>&nbsp;        }
+<i>60</i>&nbsp;
+<b class="nc"><i>61</i>&nbsp;        String description = getArguments().getString(&quot;description&quot;);</b>
+<b class="nc"><i>62</i>&nbsp;        if (description != null) {</b>
+<b class="nc"><i>63</i>&nbsp;            TextView descriptionText = (TextView) mView.findViewById(R.id.event_description);</b>
+<b class="nc"><i>64</i>&nbsp;            descriptionText.setText(description);</b>
+<i>65</i>&nbsp;        }
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;        int numAttendees = getArguments().getInt(&quot;numAttendees&quot;);</b>
+<b class="nc"><i>68</i>&nbsp;        setNumAttending(numAttendees, mView);</b>
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;
+<b class="nc"><i>71</i>&nbsp;        ToggleButton toggleButton = (ToggleButton) mView.findViewById(R.id.attendingToggle);</b>
+<b class="nc"><i>72</i>&nbsp;        boolean attending = getArguments().getBoolean(&quot;amAttending&quot;);</b>
+<b class="nc"><i>73</i>&nbsp;        toggleButton.setChecked(attending);</b>
+<b class="nc"><i>74</i>&nbsp;        toggleButton.setOnClickListener(new View.OnClickListener() {</b>
+<i>75</i>&nbsp;            @Override
+<i>76</i>&nbsp;            public void onClick(View v) {
+<b class="nc"><i>77</i>&nbsp;                Event event = getArguments().getParcelable(&quot;eventObject&quot;);</b>
+<b class="nc"><i>78</i>&nbsp;                if (((ToggleButton) v).isChecked()) {</b>
+<b class="nc"><i>79</i>&nbsp;                    Log.d(TAG, &quot;attend event&quot;);</b>
+<b class="nc"><i>80</i>&nbsp;                    if (event != null) {</b>
+<b class="nc"><i>81</i>&nbsp;                        attendEvent(event);</b>
+<i>82</i>&nbsp;                    }
+<i>83</i>&nbsp;                } else {
+<b class="nc"><i>84</i>&nbsp;                    Log.d(TAG, &quot;unattend event&quot;);</b>
+<b class="nc"><i>85</i>&nbsp;                    if (event != null) {</b>
+<b class="nc"><i>86</i>&nbsp;                        unattendEvent(event);</b>
+<i>87</i>&nbsp;                    }
+<i>88</i>&nbsp;                }
+<i>89</i>&nbsp;            }
+<i>90</i>&nbsp;        });
+<b class="nc"><i>91</i>&nbsp;        return mView;</b>
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    private void setNumAttending(int numAttending, View mView) {
+<b class="nc"><i>95</i>&nbsp;        if (numAttending &gt; 0 &amp;&amp; mView != null) {</b>
+<b class="nc"><i>96</i>&nbsp;            TextView attendanceText = (TextView) mView.findViewById(R.id.attendees);</b>
+<b class="nc"><i>97</i>&nbsp;            String text = &quot;&quot; + numAttending + &quot; attending&quot;;</b>
+<b class="nc"><i>98</i>&nbsp;            attendanceText.setText(text);</b>
+<i>99</i>&nbsp;        }
+<i>100</i>&nbsp;    }
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;    private void unattendEvent(Event event) {
+<b class="nc"><i>103</i>&nbsp;        AsyncTask&lt;Event, Event, Event&gt; task = new AsyncTask&lt;Event, Event, Event&gt;() {</b>
+<i>104</i>&nbsp;            @Override
+<i>105</i>&nbsp;            protected Event doInBackground(Event[] params) {
+<b class="nc"><i>106</i>&nbsp;                Account accnt = ((MOTSApp) getActivity().getApplication()).getMyAccount();</b>
+<b class="nc"><i>107</i>&nbsp;                if (accnt != null) {</b>
+<b class="nc"><i>108</i>&nbsp;                    Log.d(TAG, &quot;Account: &quot; + accnt.getName() + &quot; found&quot;);</b>
+<i>109</i>&nbsp;                } else {
+<b class="nc"><i>110</i>&nbsp;                    Log.d(TAG, &quot;no account found&quot;);</b>
+<i>111</i>&nbsp;                }
+<i>112</i>&nbsp;                try {
+<b class="nc"><i>113</i>&nbsp;                    if (params.length == 1) {</b>
+<b class="nc"><i>114</i>&nbsp;                        Event event1 = params[0];</b>
+<b class="nc"><i>115</i>&nbsp;                        DBManager.removeAttendance(accnt, event1);</b>
+<b class="nc"><i>116</i>&nbsp;                        return event1;</b>
+<i>117</i>&nbsp;                    }
+<b class="nc"><i>118</i>&nbsp;                } catch (ClassNotFoundException e) {</b>
+<b class="nc"><i>119</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>120</i>&nbsp;                } catch (SQLException e) {</b>
+<b class="nc"><i>121</i>&nbsp;                    Log.d(TAG, &quot;SQL Exception&quot;);</b>
+<b class="nc"><i>122</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>123</i>&nbsp;                }</b>
+<b class="nc"><i>124</i>&nbsp;                return null;</b>
+<i>125</i>&nbsp;            }
+<i>126</i>&nbsp;            @Override
+<i>127</i>&nbsp;            protected void onPostExecute(Event passedEvent) {
+<b class="nc"><i>128</i>&nbsp;                if (passedEvent!=null) {</b>
+<b class="nc"><i>129</i>&nbsp;                    Log.d(TAG, &quot;user is not attending: &quot; + passedEvent.title);</b>
+<i>130</i>&nbsp;                }
+<i>131</i>&nbsp;            }
+<i>132</i>&nbsp;        };
+<b class="nc"><i>133</i>&nbsp;        task.execute(event);</b>
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;    }
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;    private void attendEvent(Event event) {
+<b class="nc"><i>138</i>&nbsp;        AsyncTask&lt;Event, Event, Event&gt; task = new AsyncTask&lt;Event, Event, Event&gt;() {</b>
+<i>139</i>&nbsp;            @Override
+<i>140</i>&nbsp;            protected Event doInBackground(Event[] params) {
+<b class="nc"><i>141</i>&nbsp;                Account accnt = ((MOTSApp) getActivity().getApplication()).getMyAccount();</b>
+<b class="nc"><i>142</i>&nbsp;                if (accnt != null) {</b>
+<b class="nc"><i>143</i>&nbsp;                    Log.d(TAG, &quot;Account: &quot; + accnt.getName() + &quot; found&quot;);</b>
+<i>144</i>&nbsp;                } else {
+<b class="nc"><i>145</i>&nbsp;                    Log.d(TAG, &quot;no account found&quot;);</b>
+<i>146</i>&nbsp;                }
+<i>147</i>&nbsp;                try {
+<b class="nc"><i>148</i>&nbsp;                    if (params.length == 1) {</b>
+<b class="nc"><i>149</i>&nbsp;                        Event event1 = params[0];</b>
+<b class="nc"><i>150</i>&nbsp;                        DBManager.addAccountToEvent(accnt, event1);</b>
+<b class="nc"><i>151</i>&nbsp;                        return event1;</b>
+<i>152</i>&nbsp;                    }
+<b class="nc"><i>153</i>&nbsp;                } catch (ClassNotFoundException e) {</b>
+<b class="nc"><i>154</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>155</i>&nbsp;                } catch (SQLException e) {</b>
+<b class="nc"><i>156</i>&nbsp;                    Log.d(TAG, &quot;SQL Exception&quot;);</b>
+<b class="nc"><i>157</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>158</i>&nbsp;                }</b>
+<b class="nc"><i>159</i>&nbsp;                return null;</b>
+<i>160</i>&nbsp;            }
+<i>161</i>&nbsp;            @Override
+<i>162</i>&nbsp;            protected void onPostExecute(Event passedEvent) {
+<b class="nc"><i>163</i>&nbsp;                if (passedEvent!=null) {</b>
+<b class="nc"><i>164</i>&nbsp;                    Log.d(TAG, &quot;user is now attending: &quot; + passedEvent.title);</b>
+<i>165</i>&nbsp;                }
+<i>166</i>&nbsp;            }
+<i>167</i>&nbsp;        };
+<b class="nc"><i>168</i>&nbsp;        task.execute(event);</b>
+<i>169</i>&nbsp;
+<i>170</i>&nbsp;    }
+<i>171</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-02-26 21:49</div>
+</div>
+</body>
+</html>

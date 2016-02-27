@@ -1,0 +1,242 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ViewController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.cse403.matchonthestreet.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ViewController (com.cse403.matchonthestreet.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ViewController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 55)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.cse403.matchonthestreet.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.location.Location;
+<i>5</i>&nbsp;import android.nfc.Tag;
+<i>6</i>&nbsp;import android.util.Log;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import com.cse403.matchonthestreet.R;
+<i>9</i>&nbsp;import com.cse403.matchonthestreet.controller.MOTSApp;
+<i>10</i>&nbsp;import com.cse403.matchonthestreet.models.Event;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.util.ArrayList;
+<i>13</i>&nbsp;import java.util.Arrays;
+<i>14</i>&nbsp;import java.util.Calendar;
+<i>15</i>&nbsp;import java.util.Collection;
+<i>16</i>&nbsp;import java.util.Date;
+<i>17</i>&nbsp;import java.util.HashMap;
+<i>18</i>&nbsp;import java.util.HashSet;
+<i>19</i>&nbsp;import java.util.List;
+<i>20</i>&nbsp;import java.util.Map;
+<i>21</i>&nbsp;import java.util.Random;
+<i>22</i>&nbsp;import java.util.Set;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;/**
+<i>25</i>&nbsp; * Created by Hao on 2/18/2016.
+<i>26</i>&nbsp; */
+<b class="nc"><i>27</i>&nbsp;public class ViewController {</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public static final String TAG = &quot;ViewController&quot;;
+<i>30</i>&nbsp;
+<b class="nc"><i>31</i>&nbsp;    private static Set&lt;Event&gt; eventSet = new HashSet&lt;&gt;();</b>
+<i>32</i>&nbsp;
+<b class="nc"><i>33</i>&nbsp;    private static Map&lt;Event, String&gt; eventIconMap = new HashMap&lt;&gt;();</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    private static Context context;
+<i>36</i>&nbsp;
+<b class="nc"><i>37</i>&nbsp;    protected Location userLocation = null;</b>
+<i>38</i>&nbsp;
+<b class="nc"><i>39</i>&nbsp;    public void setContext(Context c) { context = c; }</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    public Set&lt;Event&gt; getEventSet() {
+<b class="nc"><i>42</i>&nbsp;        return eventSet;</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public void addEventToSet(Event event) {
+<b class="nc"><i>46</i>&nbsp;        if (!eventSet.contains(event)) {</b>
+<i>47</i>&nbsp;            // Assign icon
+<b class="nc"><i>48</i>&nbsp;            if (SportsIconFinder.getInstance() != null &amp;&amp; context != null) {</b>
+<b class="nc"><i>49</i>&nbsp;                String iconPath = SportsIconFinder.getInstance().matchString(context, event.getTitle());</b>
+<b class="nc"><i>50</i>&nbsp;                Log.d(TAG, &quot;Assigned icon: &quot; + iconPath);</b>
+<b class="nc"><i>51</i>&nbsp;                eventIconMap.put(event, iconPath);</b>
+<b class="nc"><i>52</i>&nbsp;            } else {</b>
+<b class="nc"><i>53</i>&nbsp;                Log.d(TAG, &quot;IconFinder not initialized!!!&quot;);</b>
+<i>54</i>&nbsp;            }
+<b class="nc"><i>55</i>&nbsp;            eventSet.add(event);</b>
+<i>56</i>&nbsp;        }
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public boolean updateEventList(Collection&lt;Event&gt; updatedSet) {
+<b class="nc"><i>60</i>&nbsp;        boolean change = !eventSet.equals(updatedSet);</b>
+<b class="nc"><i>61</i>&nbsp;        if (change) {</b>
+<b class="nc"><i>62</i>&nbsp;            eventSet.clear();</b>
+<b class="nc"><i>63</i>&nbsp;            for (Event e : updatedSet) {</b>
+<b class="nc"><i>64</i>&nbsp;                addEventToSet(e);</b>
+<b class="nc"><i>65</i>&nbsp;            }</b>
+<i>66</i>&nbsp;        }
+<b class="nc"><i>67</i>&nbsp;        return change;</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    public String getEventIconPath(Event e) {
+<b class="nc"><i>71</i>&nbsp;        if (eventIconMap.containsKey(e)) {</b>
+<b class="nc"><i>72</i>&nbsp;            return eventIconMap.get(e);</b>
+<i>73</i>&nbsp;        } else {
+<b class="nc"><i>74</i>&nbsp;            return null;</b>
+<i>75</i>&nbsp;        }
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    public void setUserLocation(Location location) {
+<b class="nc"><i>79</i>&nbsp;        this.userLocation = location;</b>
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    public Location getUserLocation() {
+<b class="nc"><i>83</i>&nbsp;        return this.userLocation;</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    /*
+<i>87</i>&nbsp;    * Populate some random dummy events into the working set
+<i>88</i>&nbsp;    *
+<i>89</i>&nbsp;    * Only for testing
+<i>90</i>&nbsp;    *
+<i>91</i>&nbsp;    */
+<i>92</i>&nbsp;    public void populateDummyData() {
+<i>93</i>&nbsp;        // Sample string values to store in list
+<b class="nc"><i>94</i>&nbsp;        List&lt;String&gt; sampleVal = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>95</i>&nbsp;        Random rand = new Random();</b>
+<b class="nc"><i>96</i>&nbsp;        Calendar cal = Calendar.getInstance();</b>
+<b class="nc"><i>97</i>&nbsp;        String largeStr = MOTSApp.getContext().getResources().getString(R.string.large_text);</b>
+<i>98</i>&nbsp;
+<b class="nc"><i>99</i>&nbsp;        String[] values = new String[]{&quot;## @ IMA&quot;,</b>
+<i>100</i>&nbsp;                &quot;Casual play of ##&quot;,
+<i>101</i>&nbsp;                &quot;Team Potato needs a skillful ## player&quot;,
+<i>102</i>&nbsp;                &quot;IMA 5v5 ##&quot;,
+<i>103</i>&nbsp;                &quot;Come and play ##&quot;,
+<i>104</i>&nbsp;                &quot;Competitive ## match&quot;,
+<i>105</i>&nbsp;                &quot;2 hours of ##&quot;,
+<i>106</i>&nbsp;                &quot;Needs a little ##&quot;,
+<i>107</i>&nbsp;                &quot;Feeling like playing ##?&quot;,
+<i>108</i>&nbsp;                &quot;Great weather! Play ##&quot;,
+<i>109</i>&nbsp;                &quot;##. 3 yrs or experience required&quot;,
+<i>110</i>&nbsp;                &quot;Group ##&quot;,
+<i>111</i>&nbsp;                &quot;## -- don&#39;t bail!&quot;,
+<i>112</i>&nbsp;                &quot;## after lunch&quot;,
+<i>113</i>&nbsp;                &quot;looking for ## players&quot;,
+<i>114</i>&nbsp;                &quot;Would someone teach me ##?&quot;,
+<i>115</i>&nbsp;                &quot;fooball! Yes foobaal! foobar baz biz boz buzzz&quot;
+<i>116</i>&nbsp;        };
+<i>117</i>&nbsp;
+<b class="nc"><i>118</i>&nbsp;        String[] sports = new String[]{&quot;basketball&quot;, &quot;tennis&quot;, &quot;soccer&quot;, &quot;football&quot;,</b>
+<i>119</i>&nbsp;                &quot;badminton&quot;, &quot;ping pong&quot;, &quot;snooker&quot;, &quot;billiard&quot;, &quot;running&quot;, &quot;swimming&quot;,
+<i>120</i>&nbsp;                &quot;squash&quot;, &quot;baseball&quot;, &quot;rowing&quot;, &quot;sailing&quot;, &quot;climbing&quot;, &quot;skating&quot;,
+<i>121</i>&nbsp;                &quot;chess&quot;, &quot;boating&quot;, &quot;arch shooting&quot;, &quot;skiing&quot;, &quot;surfing&quot;};
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        for (int i = 0; i &lt; 200; i++) {</b>
+<b class="nc"><i>124</i>&nbsp;            String randStr = &quot;&quot;;</b>
+<b class="nc"><i>125</i>&nbsp;            for (int j = 0; j &lt; rand.nextInt(9); j++) {</b>
+<b class="nc"><i>126</i>&nbsp;                randStr += (char)(&#39;A&#39; + rand.nextInt(48));</b>
+<i>127</i>&nbsp;            }
+<b class="nc"><i>128</i>&nbsp;            String randTitle = values[rand.nextInt(values.length)] + &quot; &quot; + randStr;</b>
+<b class="nc"><i>129</i>&nbsp;            randTitle = randTitle.replace(&quot;##&quot;, sports[rand.nextInt(sports.length)]);</b>
+<b class="nc"><i>130</i>&nbsp;            sampleVal.add(randTitle);</b>
+<i>131</i>&nbsp;
+<i>132</i>&nbsp;        }
+<i>133</i>&nbsp;
+<b class="nc"><i>134</i>&nbsp;        List&lt;Event&gt; dummyEvents = new ArrayList&lt;&gt;();</b>
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;        // Hardcoded population of list items
+<b class="nc"><i>137</i>&nbsp;        for (String s : sampleVal) {</b>
+<b class="nc"><i>138</i>&nbsp;            Location l = new Location(&quot;dummy&quot;);</b>
+<b class="nc"><i>139</i>&nbsp;            l.setLatitude(46 + rand.nextInt(2) + rand.nextDouble());      // center at 47</b>
+<b class="nc"><i>140</i>&nbsp;            l.setLongitude(-123 + rand.nextInt(2) + rand.nextDouble());    // center at 122</b>
+<i>141</i>&nbsp;
+<b class="nc"><i>142</i>&nbsp;            int start = rand.nextInt(largeStr.length() - s.length());</b>
+<b class="nc"><i>143</i>&nbsp;            String d = largeStr.substring(start, start + s.length());</b>
+<i>144</i>&nbsp;
+<b class="nc"><i>145</i>&nbsp;            cal.set(2000 + rand.nextInt(17), rand.nextInt(12), 1 + rand.nextInt(28),</b>
+<i>146</i>&nbsp;                    rand.nextInt(24), rand.nextInt(60));
+<b class="nc"><i>147</i>&nbsp;            Date dateStart = cal.getTime();</b>
+<b class="nc"><i>148</i>&nbsp;            cal.add(Calendar.HOUR, -1 * rand.nextInt(240));</b>
+<b class="nc"><i>149</i>&nbsp;            cal.add(Calendar.MINUTE, -1 * rand.nextInt(60));</b>
+<b class="nc"><i>150</i>&nbsp;            Date dateCreate = cal.getTime();</b>
+<i>151</i>&nbsp;
+<b class="nc"><i>152</i>&nbsp;            Event e = new Event(s.hashCode(), s, l, dateStart, rand.nextInt(600) + 20, dateCreate, d);</b>
+<i>153</i>&nbsp;
+<b class="nc"><i>154</i>&nbsp;            dummyEvents.add(e);</b>
+<b class="nc"><i>155</i>&nbsp;        }</b>
+<i>156</i>&nbsp;
+<b class="nc"><i>157</i>&nbsp;        updateEventList(dummyEvents);</b>
+<i>158</i>&nbsp;    }
+<i>159</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-02-26 21:49</div>
+</div>
+</body>
+</html>

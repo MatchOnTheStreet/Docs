@@ -1,0 +1,177 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Account</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.cse403.matchonthestreet.models</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Account (com.cse403.matchonthestreet.models)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Account</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95%
+  </span>
+  <span class="absValue">
+    (19/ 20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.cse403.matchonthestreet.models;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;import java.util.List;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;/**
+<i>7</i>&nbsp; * Created by Iris on 2/7/16.
+<i>8</i>&nbsp; *
+<i>9</i>&nbsp; * Represents a user&#39;s account.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public class  Account {
+<i>12</i>&nbsp;    /**
+<i>13</i>&nbsp;     * Representation Invariant:
+<i>14</i>&nbsp;     *      uid is in the database.
+<i>15</i>&nbsp;     *      name is the same name as the name assigned to uid in the database.
+<i>16</i>&nbsp;     *
+<i>17</i>&nbsp;     * Abstraction Function:
+<i>18</i>&nbsp;     *      Account a represents the account of a user with the facebook id a.uid, the full name
+<i>19</i>&nbsp;     *      given by a.name, who is attending the list of events given by a.events.
+<i>20</i>&nbsp;     */
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    // User ID given by facebook.
+<i>23</i>&nbsp;    private int uid;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    // The name of the user whose account this is.
+<i>26</i>&nbsp;    private String name;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    // A list of events the user is planning on attending.
+<i>29</i>&nbsp;    private List&lt;Event&gt; events;
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;    public Account(int uid, String name) {</b>
+<b class="fc"><i>32</i>&nbsp;        this.uid = uid;</b>
+<b class="fc"><i>33</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>34</i>&nbsp;        events = new ArrayList&lt;Event&gt;();</b>
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /**
+<i>38</i>&nbsp;     * Add an event to list of events this account is planning on attending.
+<i>39</i>&nbsp;     *
+<i>40</i>&nbsp;     * @param event The event to add
+<i>41</i>&nbsp;     * @return true if the event was added, false otherwise. The event will not
+<i>42</i>&nbsp;     * be added if it was already in the list of events the account was planning
+<i>43</i>&nbsp;     * on attending.
+<i>44</i>&nbsp;     */
+<i>45</i>&nbsp;    public boolean addEvent(Event event) {
+<b class="fc"><i>46</i>&nbsp;        if (!events.contains(event)) {</b>
+<b class="fc"><i>47</i>&nbsp;            events.add(event);</b>
+<b class="fc"><i>48</i>&nbsp;            return true;</b>
+<i>49</i>&nbsp;        }
+<i>50</i>&nbsp;
+<b class="fc"><i>51</i>&nbsp;        return false;</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    /**
+<i>55</i>&nbsp;     * Get a deep copy of the events this account is attending.
+<i>56</i>&nbsp;     *
+<i>57</i>&nbsp;     * @return a deep copy of all the events this account is attending
+<i>58</i>&nbsp;     */
+<i>59</i>&nbsp;    public List&lt;Event&gt; getEvents() {
+<b class="fc"><i>60</i>&nbsp;        List&lt;Event&gt; copy = new ArrayList&lt;Event&gt;();</b>
+<b class="fc"><i>61</i>&nbsp;        for (Event e : events) {</b>
+<i>62</i>&nbsp;            // TODO: Make this a deeper copy
+<b class="fc"><i>63</i>&nbsp;            copy.add(e);</b>
+<b class="fc"><i>64</i>&nbsp;        }</b>
+<b class="fc"><i>65</i>&nbsp;        return copy;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     * Get the unique id associated with this account
+<i>70</i>&nbsp;     *
+<i>71</i>&nbsp;     * @return the unique id of this account
+<i>72</i>&nbsp;     */
+<b class="fc"><i>73</i>&nbsp;    public int getUid() { return uid; }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    /**
+<i>76</i>&nbsp;     * Get the name of this account
+<i>77</i>&nbsp;     *
+<i>78</i>&nbsp;     * @return the name of this account
+<i>79</i>&nbsp;     */
+<i>80</i>&nbsp;    public String getName() {
+<b class="fc"><i>81</i>&nbsp;        return name;</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    @Override
+<i>86</i>&nbsp;    public boolean equals(Object o) {
+<b class="fc"><i>87</i>&nbsp;        if (!(o instanceof Account)) {</b>
+<b class="nc"><i>88</i>&nbsp;            return false;</b>
+<i>89</i>&nbsp;        }
+<i>90</i>&nbsp;
+<b class="fc"><i>91</i>&nbsp;        Account a = (Account) o;</b>
+<b class="fc"><i>92</i>&nbsp;        return a.uid == uid &amp;&amp; a.name.equals(name);</b>
+<i>93</i>&nbsp;    }
+<i>94</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-02-26 21:49</div>
+</div>
+</body>
+</html>
