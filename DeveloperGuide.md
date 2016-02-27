@@ -169,13 +169,24 @@ In Android Studio:
 
 * Make sure to select the Unit Tests Build Variant. You may either select it on the side,
 or on the Build option in the menu.
+
 ![build-variants-side-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/build-variants-side.png)
+
 ![build-variant-option-menu-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/build-variant-option-menu.png)
+
 * If the option "Run All Tests" shows up in the build selector, select it.
+
 ![build-selector-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/build-selector.png)
+
 * If the option is not available click on "edit configuration" in the build selector, click the
 	plus button, click on "Junit" add set the fields to what is shown bellow. Click OK.
+
 ![build-setting-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/build-setting.png)
+
 * Select the "Run All Tests" option and click the "run with test coverage" button.
+
 ![run-with-coverage-button-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/run-with-coverage-button.png)
+
 * You should now be runnig the android studio coverage tool.
+
+A recent output of our code coverage can be found in the codeCoverage folder in the Docs repo.
