@@ -190,3 +190,10 @@ or on the Build option in the menu.
 * You should now be runnig the android studio coverage tool.
 
 A recent output of our code coverage can be found in the codeCoverage folder in the Docs repo.
+
+
+##System Tests
+Our system tests are the DBManagerTest.java class. This class tests adding and getting all the
+elements (Events and Accounts) from our backend. This events excercise the funcionality of
+our app.
+
