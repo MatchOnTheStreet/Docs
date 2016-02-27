@@ -69,7 +69,7 @@ The fields for top to bottom are respectively:
 * **Search radius**: Typing a number in the entry will narrow the results into events that are within this radius.
 * **Apply button**: By tapping on this button, all the filled-in entries will be collected and used in the filter. The list of events will refresh according to the specified filter.
 
-![filter](https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-filter-after.png)
+<img src="https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-filter-after.png" width="640">
 
 After applying the filter, you can tap on the "Map" button at the lower-right corner of the List View to inspect the filter results on the Map.
 
