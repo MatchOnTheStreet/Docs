@@ -163,3 +163,19 @@ Previously we were using a public Google Form to register bug reports. A record 
 * Factory pattern
 	* In the `ListViewActivity`, we implemented  `SetTextDatePickerDialog` using the Factory Pattern. Because the `DatePickerDialog` objects for different entry fields are just trivially different, we used a getPick() method inside this class instead of calling different constructors everytime. By doing so the code redundancy was reduced effectively.
 ![fac-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/9-factory-pattern.png)
+
+##Running Coverage Report
+In Android Studio:
+
+* Make sure to select the Unit Tests Build Variant. You may either select it on the side,
+or on the Build option in the menu.
+![build-variants-side-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/build-variants-side-)
+![build-variant-option-menu-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/build-variant-option-menu-)
+* If the option "Run All Tests" shows up in the build selector, select it.
+![build-selector-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/build-selector)
+* If the option is not available click on "edit configuration" in the build selector, click the
+	plus button, click on "Junit" add set the fields to what is shown bellow. Click OK.
+![build-setting-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/build-setting)
+* Select the "Run All Tests" option and click the "run with test coverage" button.
+![run-with-coverage-button-img](https://github.com/MatchOnTheStreet/Docs/blob/master/img/run-with-coverage-button)
+* You should now be runnig the android studio coverage tool.
