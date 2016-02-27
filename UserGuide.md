@@ -36,7 +36,7 @@ When you are using the app for the first time, you will be automatically prompte
 ##Map View
 The map view is the main component of the application. You can use it to browse around and find events by their locations.
 
-![map-view](https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-map.png)
+<img src="https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-map.png" width="480">
 
 The search bar is used to find a certain location. If the name or address of a location is entered and the search icon is tapped, the map will be zoomed to this specific location, if it exists.
 
@@ -47,20 +47,20 @@ The three buttons, from top to bottom, are:
 
 The different markers denote the location of different events. When the marker is tapped, its details will be shown as below:
 
-![detail](https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-detail.png)
+<img src="https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-detail.png" width="480">
 
 The detail section displays the title, description, date, duration and participants for the events. The toggle button in the lower-right corner will allow you to join or leave a certain event.
 
 ##List View
 The List View could be access from the Map View by tapping on the "List" button. It is used to intuitively display title/descriptions of events, and to filter/search for specific events.
 
-![list-view](https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-list.png)
+<img src="https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-list.png" width="480">
 
 By tapping on any of the events, you will be transfered to the Map View displaying the location and the detail section of this event.
 
 By continuing scrolling/swiping down when at the top of the list, you will bring up the options for searching/filtering.
 
-![filter](https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-filter.png)
+<img src="https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-filter.png" width="480">
 
 The fields for top to bottom are respectively:
 * **Keyword Searchbar**: You can type any keywords that you wish the resulting events to contain.
@@ -69,13 +69,13 @@ The fields for top to bottom are respectively:
 * **Search radius**: Typing a number in the entry will narrow the results into events that are within this radius.
 * **Apply button**: By tapping on this button, all the filled-in entries will be collected and used in the filter. The list of events will refresh according to the specified filter.
 
-<img src="https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-filter-after.png" width="640">
+<img src="https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-filter-after.png" width="480">
 
 After applying the filter, you can tap on the "Map" button at the lower-right corner of the List View to inspect the filter results on the Map.
 
 ##Sidebar
 
-![side-bar](https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-sidebar.png)
+<img src="https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-sidebar.png" width="480">
 
 The sidebar could be accessed by swiping from the left on screens on which you can see the hamburger button (Normally, the Map View). It contains: 
 * **Map**: A shortcut to the Map View.
