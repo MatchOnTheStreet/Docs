@@ -23,6 +23,7 @@ If you can’t find a sporting event that fits your requirements, you can create
 * A title (the first thing other people will see, should include name of sport)
 * The time and approximate duration of the event 
 * A description (any special notes or requirements e.g. need to bring cleats or a ball. Or notes on where to meet.)
+*After you created an event, an icon will be automatically assigned to this event based on its title. Therefore it is recommended that the title contains the name of the sports/event such as "basketball", "table tennis", "football", etc.*
 
 ##Viewing your Events
 Opening your profile will allow you to see the events you are attending. To do this swipe from the left-hand side of the screen to bring up the sidebar and tap the “My Events” item. This will bring up a screen that has all the events you are attending and tapping on an event will allow you to view the specific details and unattend the event if desired.
@@ -40,9 +41,9 @@ The map view is the main component of the application. You can use it to browse 
 The search bar is used to find a certain location. If the name or address of a location is entered and the search icon is tapped, the map will be zoomed to this specific location, if it exists.
 
 The three buttons, from top to bottom, are:
-* *Zoom to user location*: When tapped, the camera is moved and zoomed in to the user's location, if it is available.
-* *Switch to List View*: When tapped, the currently displayed events are transfered to a list format in the List View, in which you can further filter and search for specific events.
-* *Refresh events*: When tapped, the information of the events are refreshed within the current screen selection. When the map is panned around, it is recommended to use this button to acquire new events.
+* **Zoom to user location**: When tapped, the camera is moved and zoomed in to the user's location, if it is available.
+* **Switch to List View**: When tapped, the currently displayed events are transfered to a list format in the List View, in which you can further filter and search for specific events.
+* **Refresh events**: When tapped, the information of the events are refreshed within the current screen selection. When the map is panned around, it is recommended to use this button to acquire new events.
 
 The different markers denote the location of different events. When the marker is tapped, its details will be shown as below:
 
@@ -62,11 +63,11 @@ By continuing scrolling/swiping down when at the top of the list, you will bring
 ![filter](https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-filter.png)
 
 The fields for top to bottom are respectively:
-* *Keyword Searchbar*: You can type any keywords that you wish the resulting events to contain.
-* *"From" date*: Double-tap on this entry will bring up a date picker. You can pick the date after with the resulting events start.
-* *"To" date*: Similar to "From" date, except that it specifies the date by which the resulting events end.
-* *Search radius*: Typing a number in the entry will narrow the results into events that are within this radius.
-* *Apply button*: By tapping on this button, all the filled-in entries will be collected and used in the filter. The list of events will refresh according to the specified filter.
+* **Keyword Searchbar**: You can type any keywords that you wish the resulting events to contain.
+* **"From" date**: Double-tap on this entry will bring up a date picker. You can pick the date after with the resulting events start.
+* **"To" date**: Similar to "From" date, except that it specifies the date by which the resulting events end.
+* **Search radius**: Typing a number in the entry will narrow the results into events that are within this radius.
+* **Apply button**: By tapping on this button, all the filled-in entries will be collected and used in the filter. The list of events will refresh according to the specified filter.
 
 ![filter](https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-filter-after.png)
 
@@ -77,10 +78,10 @@ After applying the filter, you can tap on the "Map" button at the lower-right co
 ![side-bar](https://github.com/MatchOnTheStreet/Docs/blob/master/img/ss-sidebar.png)
 
 The sidebar could be accessed by swiping from the left on screens on which you can see the hamburger button (Normally, the Map View). It contains: 
-* *Map*: A shortcut to the Map View.
-* *My Events*: The view in which you can inspect all the events you are attending.
-* *Facebook Login*: The view in which you can log in/out of the application using a Faceboook account.
-* *Report a Bug*: The link to the webpage where you can report a bug.
+* **Map**: A shortcut to the Map View.
+* **My Events**: The view in which you can inspect all the events you are attending.
+* **Facebook Login**: The view in which you can log in/out of the application using a Faceboook account.
+* **Report a Bug**: The link to the webpage where you can report a bug.
 (In current release the "Settings" item does not have any functionality.)
 
 
