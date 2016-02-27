@@ -23,7 +23,8 @@ If you can’t find a sporting event that fits your requirements, you can create
 * A title (the first thing other people will see, should include name of sport)
 * The time and approximate duration of the event 
 * A description (any special notes or requirements e.g. need to bring cleats or a ball. Or notes on where to meet.)
-*After you created an event, an icon will be automatically assigned to this event based on its title. Therefore it is recommended that the title contains the name of the sports/event such as "basketball", "table tennis", "football", etc.*
+
+**Note**: *After you created an event, an icon will be automatically assigned to this event based on its title. Therefore it is recommended that the title contains the name of the sports/event such as "basketball", "table tennis", "football", etc.*
 
 ##Viewing your Events
 Opening your profile will allow you to see the events you are attending. To do this swipe from the left-hand side of the screen to bring up the sidebar and tap the “My Events” item. This will bring up a screen that has all the events you are attending and tapping on an event will allow you to view the specific details and unattend the event if desired.
