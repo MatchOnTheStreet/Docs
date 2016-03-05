@@ -1,5 +1,24 @@
 # Developer Guide
 
+* [Developer Guide](#developer-guide)
+  * [Table of Contents](#table-of-contents)
+  * [Obtaining the Source Code](#obtaining-the-source-code)
+  * [Directory Structure](#directory-structure)
+  * [Opening the Project in an IDE](#opening-the-project-in-an-ide)
+  * [Building the Project](#building-the-project)
+  * [Testing Location Services](#testing-location-services)
+  * [Unit Tests](#unit-tests)
+  * [Nightly Builds](#nightly-builds)
+  * [Garbage Collection](#garbage-collection)
+  * [Releasing a New Version](#releasing-a-new-version)
+    * [Download links for .apk, .tar.gz, .zip files:](#download-links-for-apk-targz-zip-files)
+    * [Updating the website:](#updating-the-website)
+  * [Bug reports](#bug-reports)
+  * [Design Patterns](#design-patterns)
+  * [Running Coverage Report](#running-coverage-report)
+  * [System Tests](#system-tests)
+
+
 ##Table of Contents
 1. Obtaining the Source Code
 2. Directory Structure
