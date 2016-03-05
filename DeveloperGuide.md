@@ -1,5 +1,3 @@
-# Developer Guide
-
 * [Developer Guide](#developer-guide)
   * [Table of Contents](#table-of-contents)
   * [Obtaining the Source Code](#obtaining-the-source-code)
@@ -18,18 +16,7 @@
   * [Running Coverage Report](#running-coverage-report)
   * [System Tests](#system-tests)
 
-
-##Table of Contents
-1. Obtaining the Source Code
-2. Directory Structure
-3. Opening the Project in an IDE
-4. Building the Project
-5. Testing Location Services
-6. Unit Tests
-7. Nightly Builds
-8. Releasing a New Version
-9. Bug reports
-10. Design Patterns
+# Developer Guide
 
 ##Obtaining the Source Code
 To get the source code for Match on the Street, visit [this link to our github page](http://matchonthestreet.github.io/MatchOnTheStreet/). For direct access to our repository, visit [this link](https://github.com/MatchOnTheStreet/MatchOnTheStreet). 
