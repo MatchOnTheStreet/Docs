@@ -1,5 +1,4 @@
 * [Developer Guide](#developer-guide)
-  * [Table of Contents](#table-of-contents)
   * [Obtaining the Source Code](#obtaining-the-source-code)
   * [Directory Structure](#directory-structure)
   * [Opening the Project in an IDE](#opening-the-project-in-an-ide)
