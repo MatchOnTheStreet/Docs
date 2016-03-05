@@ -29,16 +29,26 @@ The following describes the primary directories and their contexts.
 	layouts may reference “@string/event_location_hint”, which is actually
 	located in the file strings.xml in this directory. This is a handy place to keep all the values
 	that may later change.
-3. `MatchOnTheStreet/tree/master/app/src/main/java/com/cse403/matchonthestreet/`
-	* Contains all of the java files that handle the logic of the application. This folder is
-	where most of the code will be written. You can see the application logic bound to
-	each view by looking at the objects whose name ends with Activity. For example
-	the UI element defined by the layout activity_add_event.xml is handled by the java
-	object AddEventActivity.java.
-4. `MatchOnTheStreet/blob/master/app/src/main/AndroidManifest.xml`
+3. `MatchOnTheStreet/tree/master/app/src/main/java/com/cse403/matchonthestreet/backend`
+  * Contains the backend communication code. The class DBManager contains all the methods
+  used by the app to communicate with the backend. Add methods to this class to extend the
+  access to the backend database.
+4. `MatchOnTheStreet/tree/master/app/src/main/java/com/cse403/matchonthestreet/controller`
+  * Contains the controller portions of the application.
+5. `MatchOnTheStreet/tree/master/app/src/main/java/com/cse403/matchonthestreet/models`
+  * Contains the models used by the application. Specifically it contains the Event and Account class. These classes are used to represent the sporting events and the user accounts.
+6. `MatchOnTheStreet/tree/master/app/src/main/java/com/cse403/matchonthestreet/view`
+  * Contains the views of the application. These classes correspond to the layout files found in (1).
+7. `MatchOnTheStreet/blob/master/app/src/main/AndroidManifest.xml`
 	* The manifest file presents essential information about the app to the Android system.
 	You will need to modify this file when you add new UI elements or change in some way
 	how the application interacts with the android environment.
+8. `MatchOnTheStreet/scripts`
+  * Contains scripts that are very important to the application's backend. In particular it contains sql files for creating, and deleting tables. It also contains event garbage collection scripts.
+9. `MatchOnTheStreet/app/src/test/java/com/cse403/matchonthestreet/`
+  * Contains unit tests.
+10. `MatchOnTheStreet/app/src/androidTest/java/com/cse403/matchonthestreet/`
+  * Contains UI tests.
 
 Note that the directories may appear differently when viewed in android studio.
 
@@ -134,6 +144,20 @@ This should open the editor, so add:
 
 Note that the file should have an empty line at the end.
 
+##Garbage Collection
+Old events are deleted from the database by a cron job running on the server.
+
+Garbage collection in done every hour by the following cron setup.
+
+Add a cronjob though the terminal:
+	
+	crontab -e
+
+This should open the editor, so add:
+	
+	*/59 * * * * cd <gc.sh in scripts folder> && git pull && ./gc.sh
+
+Remember to add trailing new line to file.
 
 ##Releasing a New Version
 After an updated version of the project is built and tested, it is recommended to use Gradle to generate the compiled APK file. Then the project should be pushed from local repository to the `master` branch on our repository(https://github.com/MatchOnTheStreet/MatchOnTheStreet). 
