@@ -14,6 +14,7 @@
   * [Design Patterns](#design-patterns)
   * [Running Coverage Report](#running-coverage-report)
   * [System Tests](#system-tests)
+* [Requirements](#requirements)
 
 # Developer Guide
 
@@ -225,4 +226,11 @@ A recent output of our code coverage can be found in the codeCoverage folder in 
 Our system tests are the DBManagerTest.java class. This class tests adding and getting all the
 elements (Events and Accounts) from our backend. This events excercise the funcionality of
 our app.
+
+# Requirements
+
+* At least Android version 4.3 Jelly-Bean (API 18+)
+* Google Play Services 
+
+
 

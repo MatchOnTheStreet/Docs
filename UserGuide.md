@@ -10,6 +10,7 @@
   * [Map View](#map-view)
   * [List View](#list-view)
   * [Sidebar](#sidebar)
+* [Requirements](#requirements)
 
 #User Guide
 ##What is Match on the Street?
@@ -99,5 +100,9 @@ The sidebar could be accessed by swiping from the left on screens on which you c
 * **Report a Bug**: The link to the webpage where you can report a bug.
 (In current release the "Settings" item does not have any functionality.)
 
+# Requirements
+
+* At least Android version 4.3 Jelly-Bean (API 18+)
+* Google Play Services 
 
 
